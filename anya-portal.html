@@ -3,6 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="manifest" href="app-portal.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="portal-192.png">
+<link rel="apple-touch-icon" href="portal-apple.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Portal">
+
 <meta name="theme-color" content="#F8F8F5">
 <title>Portal do cliente</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -278,7 +286,7 @@ svg.i{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-widt
 @media (max-width:900px){
   .app{grid-template-columns:minmax(0,1fr)}
   .lateral{display:none}
-  .topo .marca-mob{display:block}
+  .topo .marca-mob{display:flex}
   .resumo{grid-template-columns:repeat(2,minmax(0,1fr))}
   .ap{grid-template-columns:minmax(0,1fr);gap:18px}
   .arte.grande{width:min(100%,360px)}
@@ -298,6 +306,44 @@ svg.i{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-widt
   .grade{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
   .arqs{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 }
+
+.marca-logo{width:48px;height:48px;border-radius:14px;object-fit:contain;background:#fff;box-shadow:var(--sombra);margin-bottom:12px;display:block}
+.marca-mob{display:none;align-items:center;gap:8px}
+.marca-mob img{width:30px;height:30px;border-radius:9px;object-fit:contain;background:#fff}
+.wpp-lateral{margin:0 8px 18px;height:40px;font-size:.86rem}
+.pix{display:flex;align-items:center;gap:16px;padding:18px 20px;margin-bottom:18px;border-radius:20px}
+.pix>div{flex:1;min-width:0}
+.pix b{display:block;font-weight:600}
+.pix small{display:block;color:var(--cinza);font-size:.8rem}
+.pix code{display:block;margin-top:6px;font-size:.95rem;font-family:ui-monospace,Menlo,Consolas,monospace;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media (max-width:900px){.topo .marca-mob{display:flex}.pix{flex-wrap:wrap}.pix .btn{width:100%}}
+
+.fundo-app{position:fixed;inset:0;z-index:95;display:flex;align-items:flex-end;justify-content:center;background:rgba(23,26,25,.35);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);animation:esmaece .25s ease both}
+.modal-app{width:min(460px,100%);padding:26px 24px calc(22px + env(safe-area-inset-bottom));border-radius:26px 26px 0 0;background:#fff;animation:sobe .4s var(--mola) both}
+.modal-app h2{font-size:1.25rem;margin-bottom:4px}
+.passos-ios{list-style:none;padding:0;margin:18px 0 12px;display:grid;gap:10px}
+.passos-ios li{display:flex;gap:12px;align-items:center;padding:12px 14px;border-radius:14px;background:var(--fundo);font-size:.92rem}
+.passos-ios li>span{width:26px;height:26px;flex:none;display:grid;place-items:center;border-radius:50%;background:var(--verde);color:#fff;font-weight:700;font-size:.8rem}
+.passos-ios .i{width:18px;height:18px;vertical-align:-3px;color:#0A7AFF}
+.modal-app .modal-rodape{display:flex;justify-content:flex-end;margin-top:14px}
+.modal-app .modal-rodape .btn{flex:1}
+@media (min-width:700px){.fundo-app{align-items:center}.modal-app{border-radius:26px}}
+.st{font-size:.84rem;color:var(--texto-2)}
+.st.ok{color:var(--verde);font-weight:600}
+.st.ruim{color:var(--vermelho)}
+.btn-app{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:40px;margin-bottom:8px;border:none;border-radius:12px;background:var(--verde-claro);color:var(--verde);font-weight:600;font-size:.86rem;cursor:pointer;transition:background .2s}
+.btn-app:hover{background:#c9e9e4}
+.btn-app .i{width:17px;height:17px}
+.banner-app{display:flex;align-items:center;gap:14px;padding:14px 16px;margin-bottom:18px;border-radius:18px;background:var(--branco);box-shadow:var(--sombra)}
+.banner-app .ic{width:40px;height:40px;flex:none;display:grid;place-items:center;border-radius:12px;background:var(--verde-claro);color:var(--verde)}
+.banner-app>div{flex:1;min-width:0}
+.banner-app b{display:block;font-size:.92rem}
+.banner-app small{color:var(--texto-2);font-size:.82rem}
+.banner-app .btn{height:40px;padding:0 16px}
+.banner-app .fechar{border:none;background:none;color:var(--cinza);font-size:1.3rem;line-height:1;cursor:pointer;padding:4px}
+
+.lateral-app{margin-top:auto;padding:0 6px 8px}
+.lateral-app + .sair{margin-top:0}
 </style>
 </head>
 <body>
@@ -357,6 +403,7 @@ const moeda = v => Number(v || 0).toLocaleString('pt-BR', { style:'currency', cu
 const maiuscula = s => s ? s[0].toUpperCase() + s.slice(1) : s;
 const primeiroNome = n => String(n || '').split(/\s+/).filter(p => !p.endsWith('.'))[0] || n || '';
 const iniciais = n => String(n || '?').split(/\s+/).filter(p => p && !p.endsWith('.')).slice(0, 2).map(p => p[0].toUpperCase()).join('') || '?';
+const soNum = s => String(s || '').replace(/\D/g, '');
 const novoId = () => (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : String(Date.now() + Math.random());
 function rotuloDia(s){
   const d = diffDias(s); if (d === null) return '';
@@ -387,7 +434,7 @@ const svgDemo = (texto, cor) => 'data:image/svg+xml,' + encodeURIComponent(`<svg
 function criarDemo(){
   const t = (d, h) => dia(d) + 'T' + h + ':00';
   return {
-    org:{ id:'o1', nome:'Agência Demonstração' },
+    org:{ id:'o1', nome:'Agência Demonstração', whatsapp:'(69) 99999-0000', email:'contato@agencia.com', chave_pix:'contato@agencia.com', instagram:'@agencia' },
     cliente:{ id:'c1', nome:'Dra. Graziela', empresa:'Clínica Graziela Fisioterapia', cor:'#0F766E', recado_agencia:'Neste mês vamos priorizar conteúdos educativos, com base no comportamento recente do seu público.' },
     conteudos:[
       { id:'k3', numero:23, titulo:'Conheça a clínica por dentro', formato:'Post', status:'aguardando_cliente', data_publicacao:dia(6), legenda:'Um espaço pensado para o seu cuidado. 💚\n\nVenha conhecer a clínica e agende sua avaliação.', observacao_agencia:'Trocamos a foto da capa pela da recepção, como você pediu.', atualizado_em:t(0, '08:10') },
@@ -472,7 +519,7 @@ async function q(consulta){ const { data, error } = await consulta; if (error) t
 const apiSupabase = {
   async carregar(){
     const uid = state.user.id;
-    const [m] = await q(sb.from('membros').select('*, organizacoes(id, nome)').eq('user_id', uid).eq('papel', 'cliente').limit(1));
+    const [m] = await q(sb.from('membros').select('*, organizacoes(*)').eq('user_id', uid).eq('papel', 'cliente').limit(1));
     if (!m) return null;
     const cid = m.cliente_id;
     const [cliente] = await q(sb.from('clientes').select('*').eq('id', cid));
@@ -489,7 +536,7 @@ const apiSupabase = {
       q(sb.from('pagamentos').select('*').eq('cliente_id', cid).eq('tipo', 'receita').order('vencimento', { ascending:false }).limit(24)),
       q(sb.from('notificacoes').select('*').eq('user_id', uid).order('criado_em', { ascending:false }).limit(30))
     ]);
-    const paths = [...new Set([...conteudos, ...versoes].map(x => x.midia_path).concat(arquivos.filter(a => /^(image|video)\//.test(a.tipo || '')).map(a => a.storage_path)).filter(Boolean))];
+    const paths = [...new Set([m.organizacoes?.logo_path, ...[...conteudos, ...versoes].map(x => x.midia_path)].concat(arquivos.filter(a => /^(image|video)\//.test(a.tipo || '')).map(a => a.storage_path)).filter(Boolean))];
     if (paths.length){
       const assin = await q(sb.storage.from('arquivos').createSignedUrls(paths, 3600));
       assin.forEach(x => { if (x.signedUrl) midias[x.path] = x.signedUrl; });
@@ -623,13 +670,15 @@ function render(){
   const corpo = ({ inicio:telaInicio, aprovacoes:telaAprovacoes, aprovar:() => telaAprovar(r.id), conteudos:telaConteudos, arquivos:telaArquivos, insights:telaInsights, mensagens:telaMensagens, agenda:telaAgenda, financeiro:telaFinanceiro }[r.pagina] || telaInicio)();
   app.innerHTML = `<div class="app">
     <aside class="lateral">
-      <div class="marca"><b>${esc(state.d.org?.nome || 'Portal')}</b><small>Portal de ${esc(state.d.cliente.nome)}</small></div>
+      <div class="marca">${urlDe({ midia_path:state.d.org?.logo_path }) ? `<img class="marca-logo" src="${esc(urlDe({ midia_path:state.d.org.logo_path }))}" alt="">` : ''}<b>${esc(state.d.org?.nome || 'Portal')}</b><small>Portal de ${esc(state.d.cliente.nome)}</small></div>
+      ${state.d.org?.whatsapp ? `<a class="btn btn-claro wpp-lateral" href="https://wa.me/55${soNum(state.d.org.whatsapp)}" target="_blank" rel="noopener">${icone('mensagens')}Falar no WhatsApp</a>` : ''}
       <nav class="menu" aria-label="Menu">${MENU.map(([k, l, ic]) => `<a href="#/${k}" class="${pagina === k ? 'ativo' : ''}" ${pagina === k ? 'aria-current="page"' : ''}>${icone(ic)}${l}${k === 'aprovacoes' && n ? `<span class="qtd">${n}</span>` : ''}</a>`).join('')}</nav>
+      <div class="lateral-app"><button class="btn-app" data-app-instalar data-acao="instalar-app" hidden>${icone('baixar')}Instalar app</button><button class="btn-app" data-app-notif data-acao="ativar-notificacoes" hidden>${icone('sino')}Ativar notificações</button></div>
       <button class="btn btn-fantasma sair" data-acao="sair">${icone('sair')}Sair</button>
     </aside>
     <div class="principal">
       <header class="topo">
-        <span class="marca-mob">${esc(state.d.org?.nome || 'Portal')}</span>
+        <span class="marca-mob">${urlDe({ midia_path:state.d.org?.logo_path }) ? `<img src="${esc(urlDe({ midia_path:state.d.org.logo_path }))}" alt="">` : ''}${esc(state.d.org?.nome || 'Portal')}</span>
         <div class="dir">
           <div style="position:relative"><button class="btn-icone" data-acao="notificacoes" aria-label="Notificações">${icone('sino')}${nn ? `<span class="sino-n">${nn > 9 ? '9+' : nn}</span>` : ''}</button><div id="pop-notif"></div></div>
           <span class="avatar" style="--cor:${esc(state.d.cliente.cor || '#0F766E')}" title="${esc(state.d.cliente.nome)}">${iniciais(state.d.cliente.nome)}</span>
@@ -642,6 +691,25 @@ function render(){
       <button data-acao="mais" class="${['conteudos','insights','agenda','financeiro'].includes(pagina) ? 'ativo' : ''}">${icone('mais')}Mais</button>
     </nav>
   </div>`;
+}
+
+
+function erroAuth(e){
+  const m = String(e?.message || e || '').toLowerCase();
+  if (m.includes('email not confirmed')) return 'Seu e-mail ainda não foi confirmado. Abra o e-mail de confirmação que enviamos e clique no link. Não chegou? Use "Reenviar confirmação" abaixo.';
+  if (m.includes('invalid login credentials')) return 'E-mail ou senha incorretos. Se esqueceu, use "Esqueci minha senha".';
+  if (m.includes('already registered') || m.includes('already been registered') || m.includes('already exists')) return 'Este e-mail já tem cadastro. Clique em "Já tenho conta" para entrar, ou em "Esqueci minha senha".';
+  if (m.includes('rate limit') || m.includes('too many') || m.includes('security purposes') || m.includes('seconds')) return 'Muitas tentativas em pouco tempo. Espere alguns minutos e tente de novo.';
+  if (m.includes('password') && (m.includes('at least') || m.includes('should be') || m.includes('weak'))) return 'A senha precisa ter pelo menos 6 caracteres.';
+  if (m.includes('invalid') && m.includes('email')) return 'Este e-mail não parece válido. Confira se digitou certo.';
+  if (m.includes('signups not allowed') || m.includes('signup is disabled')) return 'O cadastro de novas contas está desligado no Supabase.';
+  if (m.includes('failed to fetch') || m.includes('network')) return 'Sem conexão com o servidor. Confira sua internet.';
+  return e?.message || 'Algo deu errado. Tente de novo.';
+}
+async function reenviarConfirmacao(email){
+  if (!email){ avisar('Digite seu e-mail no campo acima.'); return; }
+  const { error } = await sb.auth.resend({ type:'signup', email, options:{ emailRedirectTo:location.origin + location.pathname } });
+  if (error) avisar(erroAuth(error)); else avisar('E-mail de confirmação reenviado. Confira também o spam.');
 }
 
 const OLHO_ABERTO = '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/></svg>';
@@ -681,10 +749,12 @@ function telaLogin(){
     <p>${criar ? 'Use o e-mail que você passou para a agência e crie sua senha.' : 'Entre para aprovar conteúdos, ver arquivos e falar com a agência.'}</p>
     ${MODO_DEMO ? `<div class="aviso">Modo demonstração: você vai ver o portal como a cliente Dra. Graziela.</div><button class="btn btn-verde" data-acao="entrar-demo">Entrar na demonstração</button>` : `
     <form id="form-login">
-      <div class="campo"><label for="l-email">E-mail</label><input id="l-email" name="email" type="email" required autocomplete="email"></div>
+      ${state.aguardaConfirmacao && !criar ? `<div class="aviso" style="margin:0">Senha criada! Enviamos um link de confirmação para <b>${esc(state.emailDigitado)}</b>. Clique nele e depois entre aqui. Confira também o spam.</div>` : ''}
+      <div class="campo"><label for="l-email">E-mail</label><input id="l-email" name="email" type="email" required autocomplete="email" value="${esc(state.emailDigitado || '')}"></div>
       ${campoSenha('l-senha', 'senha', criar ? 'Crie uma senha' : 'Senha', criar ? 'new-password' : 'current-password', criar ? '' : '<button type="button" class="esqueci" data-acao="esqueci-senha">Esqueci minha senha</button>')}
       ${state.erro ? `<p class="erro">${esc(state.erro)}</p>` : ''}
       <button class="btn btn-verde" type="submit">${criar ? 'Criar senha e entrar' : 'Entrar'}</button>
+      ${!criar && (state.aguardaConfirmacao || /confirmad/.test(state.erro || '')) ? `<div class="troca"><button type="button" data-acao="reenviar-confirmacao">Reenviar confirmação</button></div>` : ''}
       <div class="troca"><button type="button" data-acao="trocar-login">${criar ? 'Já tenho senha' : 'Primeiro acesso? Criar senha'}</button></div>
     </form>`}
   </div></div>`;
@@ -697,6 +767,8 @@ function telaInicio(){
   const prox = d.eventos.filter(e => diffDias(e.inicio) >= 0).sort((a, b) => String(a.inicio).localeCompare(String(b.inicio)))[0];
   return `
     <section class="saud entra"><h1>Olá, ${esc(d.cliente.nome)} 👋</h1><p>Tudo o que você precisa está aqui.</p></section>
+    ${bannerFechado('instalar') ? '' : `<div class="banner-app entra" data-app-instalar hidden><span class="ic">${icone('baixar')}</span><div><b>Instale o app no seu celular</b><small>Acesso em um toque, direto da tela inicial.</small></div><button class="btn btn-verde" data-acao="instalar-app">Instalar</button><button class="fechar" data-acao="fechar-banner" data-qual="instalar" aria-label="Fechar">×</button></div>`}
+    ${bannerFechado('notif') ? '' : `<div class="banner-app entra" data-app-notif hidden><span class="ic">${icone('sino')}</span><div><b>Ative as notificações</b><small>Saiba na hora quando tiver algo para aprovar.</small></div><button class="btn btn-verde" data-acao="ativar-notificacoes">Ativar</button><button class="fechar" data-acao="fechar-banner" data-qual="notif" aria-label="Fechar">×</button></div>`}
     ${d.cliente.recado_agencia ? `<div class="recado entra" style="--i:1"><span class="avatar">${iniciais(d.org?.nome)}</span><div><b>Recado da agência</b>${esc(d.cliente.recado_agencia)}</div></div>` : ''}
     <div class="resumo">
       <a class="card res toque entra ${pend.length ? 'destaque' : ''}" style="--i:2" href="#/aprovacoes"><span class="n">${pend.length}</span><span>${pend.length === 1 ? 'Aprovação pendente' : 'Aprovações pendentes'}</span></a>
@@ -792,7 +864,7 @@ function telaInsights(){
 }
 
 function telaMensagens(){
-  return `<div class="chat"><h1 class="entra" style="margin:8px 0 6px">Mensagens</h1><p class="sub" style="margin-bottom:18px">Fale com a agência por aqui. Você recebe um aviso quando responderem.</p>
+  return `<div class="chat"><h1 class="entra" style="margin:8px 0 6px">Mensagens</h1><p class="sub" style="margin-bottom:18px">Fale com a agência por aqui. Você recebe um aviso quando responderem.${state.d.org?.whatsapp ? ` Se for urgente, <a class="link" href="https://wa.me/55${soNum(state.d.org.whatsapp)}" target="_blank" rel="noopener">chame no WhatsApp</a>.` : ''}</p>
     <div class="thread" id="thread">${thread(null)}</div>
     <form class="form-msg" id="form-coment" data-conteudo=""><textarea name="texto" rows="1" required placeholder="Escreva sua mensagem"></textarea><button class="btn btn-verde" type="submit">Enviar</button></form></div>`;
 }
@@ -816,6 +888,7 @@ function telaFinanceiro(){
       <div class="card res entra ${total ? 'destaque' : ''}"><span class="n">${moeda(total)}</span><span>Em aberto</span></div>
       ${aberto[0] ? `<div class="card res entra" style="--i:1"><span class="n">${dataCurta(aberto.sort((a, b) => a.vencimento.localeCompare(b.vencimento))[0].vencimento)}</span><span>Próximo vencimento</span></div>` : ''}
     </div>
+    ${state.d.org?.chave_pix ? `<div class="card pix entra"><div><b>Pague pelo PIX</b><small>Chave da ${esc(state.d.org.nome)}</small><code>${esc(state.d.org.chave_pix)}</code></div><button class="btn btn-verde" data-acao="copiar-pix">Copiar chave</button></div>` : ''}
     ${l.length ? `<div class="linhas">${l.map(p => { const atr = p.status === 'pendente' && diffDias(p.vencimento) < 0; return `<div class="linha"><div class="linha-tit">${esc(p.servico || 'Mensalidade')}<small>Vencimento ${dataCurta(p.vencimento)}</small></div><span class="pill ${p.status === 'recebido' ? 'tom-verde' : atr ? 'tom-vermelho' : 'tom-ambar'}">${p.status === 'recebido' ? 'Pago' : atr ? 'Atrasado' : 'Em aberto'}</span><span class="linha-valor">${moeda(p.valor)}</span></div>`; }).join('')}</div>` : '<div class="vazio">Nenhum lançamento.</div>'}`;
 }
 
@@ -880,7 +953,8 @@ document.addEventListener('click', async e => {
   const k = id ? state.d?.conteudos.find(x => x.id === id) : null;
   switch (a){
     case 'entrar-demo': state.d = await api.carregar(); state.tela = 'app'; render(); break;
-    case 'trocar-login': state.modoLogin = state.modoLogin === 'entrar' ? 'criar' : 'entrar'; state.erro = ''; render(); break;
+    case 'trocar-login': state.emailDigitado = document.getElementById('l-email')?.value || state.emailDigitado || ''; state.modoLogin = state.modoLogin === 'entrar' ? 'criar' : 'entrar'; state.erro = ''; state.aguardaConfirmacao = false; render(); break;
+    case 'reenviar-confirmacao': reenviarConfirmacao(document.getElementById('l-email')?.value.trim() || state.emailDigitado); break;
     case 'ver-senha': {
       const inp = el.parentElement.querySelector('input'); const mostrar = inp.type === 'password';
       inp.type = mostrar ? 'text' : 'password'; el.innerHTML = mostrar ? OLHO_FECHADO : OLHO_ABERTO;
@@ -905,6 +979,7 @@ document.addEventListener('click', async e => {
       </form>`);
       break;
     case 'comentar': document.getElementById('txt-coment')?.focus(); document.getElementById('form-coment')?.scrollIntoView({ behavior:'smooth', block:'center' }); break;
+    case 'copiar-pix': try { await navigator.clipboard.writeText(state.d.org.chave_pix); avisar('Chave PIX copiada.'); } catch { avisar(state.d.org.chave_pix); } break;
     case 'filtro-cont': state.filtroCont = el.dataset.valor; render(); break;
     case 'abrir-pasta': state.pastaAberta = id; render(); window.scrollTo(0, 0); break;
     case 'fechar-pasta': state.pastaAberta = null; render(); break;
@@ -926,8 +1001,11 @@ document.addEventListener('click', async e => {
     case 'mais':
       modal(`<div class="modal folha" role="dialog" aria-modal="true" aria-label="Mais opções">
         ${[['conteudos','Conteúdos','conteudos'],['insights','Insights','insights'],['agenda','Agenda','agenda'],['financeiro','Financeiro','financeiro']].map(([k, l, ic]) => `<a href="#/${k}" data-acao="fechar-modal">${icone(ic)}${l}</a>`).join('')}
+        <button data-acao="instalar-app" data-app-instalar hidden>${icone('baixar')}Instalar app</button>
+        <button data-acao="ativar-notificacoes" data-app-notif hidden>${icone('sino')}Ativar notificações</button>
         <button data-acao="sair">${icone('sair')}Sair</button>
       </div>`);
+      atualizarBotoesApp();
       break;
   }
 });
@@ -937,20 +1015,21 @@ document.addEventListener('submit', async e => {
   if (f.id === 'form-login'){
     const d = Object.fromEntries(new FormData(f)); b.disabled = true; state.erro = '';
     try {
-      if (state.modoLogin === 'entrar'){ const { error } = await sb.auth.signInWithPassword({ email:d.email.trim(), password:d.senha }); if (error) throw new Error('E-mail ou senha incorretos.'); }
+      if (state.modoLogin === 'entrar'){ const { error } = await sb.auth.signInWithPassword({ email:d.email.trim(), password:d.senha }); if (error) throw error; }
       else {
-        const { data, error } = await sb.auth.signUp({ email:d.email.trim(), password:d.senha });
+        const { data, error } = await sb.auth.signUp({ email:d.email.trim(), password:d.senha, options:{ emailRedirectTo:location.origin + location.pathname } });
         if (error) throw error;
-        if (!data.session){ state.modoLogin = 'entrar'; render(); avisar('Enviamos um link de confirmação para o seu e-mail.'); return; }
+        if (data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0) throw new Error('already registered');
+        if (!data.session){ state.modoLogin = 'entrar'; state.emailDigitado = d.email.trim(); state.aguardaConfirmacao = true; render(); return; }
       }
-    } catch (err){ state.erro = msgErro(err); render(); }
+    } catch (err){ state.emailDigitado = d.email?.trim() || ''; state.erro = erroAuth(err); render(); }
     return;
   }
   if (f.id === 'form-recuperar'){
     const email = f.email.value.trim(); if (!email) return;
     b.disabled = true; b.textContent = 'Enviando…'; state.erro = ''; state.emailDigitado = email;
     const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo:location.origin + location.pathname });
-    if (error) state.erro = /rate|limit|seconds/i.test(error.message) ? 'Muitas tentativas seguidas. Espere alguns minutos e tente de novo.' : msgErro(error);
+    if (error) state.erro = erroAuth(error);
     else state.okRecuperar = true;
     render(); return;
   }
@@ -994,6 +1073,118 @@ document.addEventListener('dragover', e => { const z = e.target.closest?.('#envi
 document.addEventListener('dragleave', e => { const z = e.target.closest?.('#enviar-arq'); if (z && !z.contains(e.relatedTarget)) z.classList.remove('alvo'); });
 document.addEventListener('drop', e => { const z = e.target.closest?.('#enviar-arq'); if (z && e.dataTransfer.files.length){ e.preventDefault(); z.classList.remove('alvo'); enviarArquivos([...e.dataTransfer.files]); } });
 window.addEventListener('hashchange', () => { if (state.tela === 'app'){ if (rota().pagina !== 'arquivos') state.pastaAberta = null; fecharModal(); render(); window.scrollTo(0, 0); } });
+
+
+/* =====================================================================
+   APP INSTALÁVEL E NOTIFICAÇÕES NO CELULAR
+   ===================================================================== */
+const APP_TIPO = 'portal';
+const VAPID_PUBLICA = 'BJnO9wHHeINVZAw_J_D3PJRygVnIyGItOoVvjO_KzgVmgDbhsS_7mFb5tRN3_ys3Z0mEkPZZThKBRQb80_Cnlso';
+const pwa = { prompt:null, reg:null };
+const appInstalado = () => matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+const ehIOS = () => /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+const podeApp = () => 'serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost');
+if (podeApp()) navigator.serviceWorker.register('sw.js').then(r => { pwa.reg = r; }).catch(() => {});
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); pwa.prompt = e; atualizarBotoesApp(); });
+window.addEventListener('appinstalled', () => { pwa.prompt = null; atualizarBotoesApp(); avisar('App instalado! Procure o ícone na sua tela.'); });
+
+function podeInstalar(){ return !appInstalado() && (!!pwa.prompt || ehIOS()); }
+function atualizarBotoesApp(){
+  document.querySelectorAll('[data-app-instalar]').forEach(b => { b.hidden = !podeInstalar(); });
+  statusNotificacoes().then(st => {
+    document.querySelectorAll('[data-app-notif]').forEach(b => { b.hidden = st !== 'inativo'; });
+    document.querySelectorAll('[data-app-status]').forEach(el => { el.innerHTML = textoStatus(st); });
+  });
+}
+async function instalarApp(){
+  if (pwa.prompt){ pwa.prompt.prompt(); await pwa.prompt.userChoice.catch(() => {}); pwa.prompt = null; atualizarBotoesApp(); return; }
+  if (ehIOS()) instrucoesIPhone(false);
+  else avisar('Use o menu do navegador (⋮) e toque em "Instalar app" ou "Adicionar à tela inicial".');
+}
+function instrucoesIPhone(paraNotificacao){
+  const html = `<div class="modal-app" role="dialog" aria-modal="true" aria-labelledby="mt-app">
+    <h2 id="mt-app">${paraNotificacao ? 'No iPhone, instale o app primeiro' : 'Instalar no iPhone'}</h2>
+    <p class="sub">${paraNotificacao ? 'O iPhone só entrega notificações para sites instalados na tela de início.' : 'Leva 10 segundos.'}</p>
+    <ol class="passos-ios">
+      <li><span>1</span><div>Toque em <b>Compartilhar</b> <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3M8 7l4-4 4 4"/><path d="M6 11H5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1h-1"/></svg> na barra do Safari.</div></li>
+      <li><span>2</span><div>Role e toque em <b>Adicionar à Tela de Início</b>.</div></li>
+      <li><span>3</span><div>Abra o app pelo novo ícone${paraNotificacao ? ' e toque em <b>Ativar notificações</b> de novo' : ''}.</div></li>
+    </ol>
+    <p class="sub" style="font-size:.8rem">Precisa ser pelo Safari, com iOS 16.4 ou mais novo.</p>
+    <div class="modal-rodape"><button type="button" class="btn btn-verde" data-acao="fechar-app">Entendi</button></div>
+  </div>`;
+  let el = document.getElementById('janela-app');
+  if (!el){ el = document.createElement('div'); el.id = 'janela-app'; document.body.appendChild(el); }
+  el.innerHTML = `<div class="fundo-app" data-acao="fechar-app-fundo">${html}</div>`;
+}
+function b64ParaBytes(s){
+  const p = '='.repeat((4 - s.length % 4) % 4), b = atob((s + p).replace(/-/g, '+').replace(/_/g, '/'));
+  return Uint8Array.from([...b].map(c => c.charCodeAt(0)));
+}
+async function statusNotificacoes(){
+  if (!('Notification' in window) || !podeApp() || !('PushManager' in window)) return ehIOS() && !appInstalado() ? 'ios' : 'sem-suporte';
+  if (Notification.permission === 'denied') return 'bloqueado';
+  try {
+    const reg = await navigator.serviceWorker.getRegistration();
+    const sub = reg && await reg.pushManager.getSubscription();
+    return sub && Notification.permission === 'granted' ? 'ativo' : 'inativo';
+  } catch { return 'inativo'; }
+}
+function textoStatus(st){
+  return ({ ativo:'<span class="st ok">● Ativadas neste aparelho</span>', inativo:'<span class="st">Desativadas neste aparelho</span>',
+    bloqueado:'<span class="st ruim">Bloqueadas. Libere nas configurações do navegador (cadeado ao lado do endereço).</span>',
+    ios:'<span class="st">No iPhone, instale o app para ativar.</span>', 'sem-suporte':'<span class="st">Este navegador não aceita notificações.</span>' })[st] || '';
+}
+async function ativarNotificacoes(){
+  const st = await statusNotificacoes();
+  if (st === 'ios'){ instrucoesIPhone(true); return; }
+  if (st === 'sem-suporte'){ avisar(MODO_DEMO ? 'As notificações funcionam no site publicado, não no modo demonstração.' : 'Este navegador não aceita notificações. Tente o Chrome.'); return; }
+  if (st === 'bloqueado'){ avisar('As notificações estão bloqueadas. Toque no cadeado ao lado do endereço e libere.'); return; }
+  try {
+    const perm = await Notification.requestPermission();
+    if (perm !== 'granted'){ avisar('Sem permissão, não dá para enviar avisos.'); return; }
+    const reg = await navigator.serviceWorker.ready;
+    let sub = await reg.pushManager.getSubscription();
+    if (!sub) sub = await reg.pushManager.subscribe({ userVisibleOnly:true, applicationServerKey:b64ParaBytes(VAPID_PUBLICA) });
+    const j = sub.toJSON();
+    if (!MODO_DEMO){
+      const { error } = await sb.rpc('salvar_inscricao_push', { p_endpoint:j.endpoint, p_p256dh:j.keys.p256dh, p_auth:j.keys.auth, p_app:APP_TIPO });
+      if (error) throw error;
+    }
+    reg.showNotification('Notificações ativadas', { body:'Você vai receber os avisos importantes aqui.', icon:APP_TIPO === 'portal' ? 'portal-192.png' : 'anya-192.png', badge:'selo-notificacao.png' });
+    avisar('Pronto! Notificações ativadas neste aparelho.');
+  } catch (e){ avisar(e?.message || 'Não foi possível ativar agora.'); }
+  atualizarBotoesApp();
+}
+async function desligarPushDoAparelho(){
+  try {
+    const reg = await navigator.serviceWorker?.getRegistration(); const sub = reg && await reg.pushManager.getSubscription();
+    if (sub && !MODO_DEMO){ await sb.rpc('remover_inscricao_push', { p_endpoint:sub.endpoint }); }
+  } catch {}
+}
+function contadorNoIcone(n){ try { if (n) navigator.setAppBadge?.(n); else navigator.clearAppBadge?.(); } catch {} }
+document.addEventListener('click', e => {
+  const el = e.target.closest('[data-acao]'); if (!el) return;
+  const a = el.dataset.acao;
+  if (a === 'instalar-app') instalarApp();
+  if (a === 'ativar-notificacoes') ativarNotificacoes();
+  if (a === 'fechar-app' || (a === 'fechar-app-fundo' && e.target === el)) document.getElementById('janela-app')?.remove();
+});
+
+/* ---- encaixe no portal ---- */
+function bannerFechado(q){ try { return localStorage.getItem('portal-banner-' + q) === '1'; } catch { return false; } }
+document.addEventListener('click', e => {
+  const el = e.target.closest('[data-acao="fechar-banner"]'); if (!el) return;
+  try { localStorage.setItem('portal-banner-' + el.dataset.qual, '1'); } catch {}
+  el.closest('.banner-app')?.remove();
+});
+const renderAntesApp = render;
+render = function(){
+  renderAntesApp();
+  if (state.tela === 'app'){ atualizarBotoesApp(); contadorNoIcone(pendentes().length); }
+};
+const sairAntesApp = sair;
+sair = async function(){ await desligarPushDoAparelho(); contadorNoIcone(0); await sairAntesApp(); };
 
 iniciar();
 </script>

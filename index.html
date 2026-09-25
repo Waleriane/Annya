@@ -3,6 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="manifest" href="app-agencia.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="anya-192.png">
+<link rel="apple-touch-icon" href="anya-apple.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="ANYA">
+
 <title>ANYA — Sistema Operacional da Agência</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -369,10 +377,10 @@ svg.i{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-widt
 .aviso{padding:14px 16px;border-radius:14px;background:var(--verde-claro);color:var(--verde-escuro);font-size:.88rem;margin-bottom:18px}
 .erro{color:var(--vermelho);font-size:.88rem}
 .troca{text-align:center;margin-top:6px}
-.quem{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;margin-bottom:28px;border-radius:14px;background:rgba(23,26,25,.06)}
-.quem>*{display:flex;align-items:center;justify-content:center;height:40px;border:none;border-radius:11px;background:none;font-weight:500;font-size:.9rem;color:var(--texto-2);text-decoration:none;transition:background .25s,color .25s}
-.quem .ativo{background:#fff;color:var(--verde);font-weight:600;box-shadow:0 1px 3px rgba(23,26,25,.12)}
-.quem a:hover{color:var(--texto)}
+.escolha-acesso{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;margin-bottom:28px;border-radius:14px;background:rgba(23,26,25,.06)}
+.escolha-acesso>*{display:flex;align-items:center;justify-content:center;height:40px;border:none;border-radius:11px;background:none;font-weight:500;font-size:.9rem;color:var(--texto-2);text-decoration:none;transition:background .25s,color .25s}
+.escolha-acesso .ativo{background:#fff;color:var(--verde);font-weight:600;box-shadow:0 1px 3px rgba(23,26,25,.12)}
+.escolha-acesso a:hover{color:var(--texto)}
 .rot-linha{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .esqueci{border:none;background:none;padding:0;color:var(--verde);font-size:.82rem;font-weight:500;cursor:pointer}
 .esqueci:hover{text-decoration:underline}
@@ -1005,6 +1013,115 @@ details.mais .campos{margin-top:16px}
 .chat-form .btn{height:46px}
 .linha-copiar{display:flex;gap:8px}
 .linha-copiar input{flex:1}
+
+/* ================================================================
+   MARCA, PERFIL E CONFIGURAÇÃO INICIAL
+   ================================================================ */
+.logo.marca-ag{display:flex;align-items:center;gap:12px;padding:2px 8px 24px}
+.ag-logo{width:42px;height:42px;flex:none;display:grid;place-items:center;overflow:hidden;border-radius:13px;background:var(--verde);color:#fff;font-weight:700;font-size:.92rem;letter-spacing:-.02em;box-shadow:0 8px 18px -10px rgba(15,118,110,.7)}
+.ag-logo img{width:100%;height:100%;object-fit:contain;background:#fff}
+.logo.marca-ag .ag-logo{display:grid;place-items:center;font-size:.92rem;color:#fff;margin:0}
+.logo.marca-ag .ag-txt{display:block;font-size:inherit;color:inherit;margin:0}
+.ag-logo.grande{width:64px;height:64px;border-radius:18px;font-size:1.2rem}
+.ag-txt{min-width:0;line-height:1.2}
+.logo.marca-ag .ag-txt b{display:block;font-size:.98rem;font-weight:700;letter-spacing:-.01em;color:var(--texto);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.logo.marca-ag .ag-txt span{display:block;font-size:.7rem;color:var(--cinza);margin-top:3px;letter-spacing:.02em}
+.lateral-rodape{gap:4px;padding:10px 0 0}
+.cartao-eu{flex:1;min-width:0;display:flex;align-items:center;gap:11px;padding:8px 10px 8px 8px;border:none;border-radius:15px;background:var(--branco);box-shadow:var(--sombra);text-align:left;cursor:pointer;transition:box-shadow .3s var(--mola),transform .3s var(--mola)}
+.cartao-eu:hover{box-shadow:var(--sombra-hover);transform:translateY(-1px)}
+.cartao-eu .avatar.p{width:36px;height:36px;border-radius:50%;font-size:.8rem}
+.eu-txt{flex:1;min-width:0;line-height:1.25}
+.eu-txt b{display:block;font-size:.86rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.eu-txt small{display:block;font-size:.74rem;color:var(--cinza);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.eu-sair{flex:none}
+.avatar.com-foto{padding:0;overflow:hidden;background:#eee}
+.avatar.com-foto img{width:100%;height:100%;object-fit:cover}
+.avatar.grande-av{width:64px;height:64px;border-radius:50%;font-size:1.2rem}
+.logo-mobile img{height:30px;width:auto;border-radius:8px;display:block}
+.sd-marca{display:flex;align-items:center;gap:14px}
+.sd-marca img{width:52px;height:52px;border-radius:15px;object-fit:contain;background:#fff;box-shadow:var(--sombra)}
+.cfg-cab{display:flex;align-items:flex-start;justify-content:space-between;gap:14px}
+.cfg-resumo{display:flex;align-items:center;gap:16px;margin-top:18px}
+.cfg-resumo b{display:block;font-size:1.05rem;font-weight:600}
+.cfg-resumo small{display:block;color:var(--cinza);font-size:.84rem}
+.cfg-itens{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:10px;font-size:.84rem;color:var(--texto-2)}
+.cfg-itens span{display:inline-flex;align-items:center;gap:6px}
+.cfg-itens .i{width:15px;height:15px;color:var(--verde)}
+.img-campo{display:flex;align-items:center;gap:16px}
+.img-alvo{width:84px;height:84px;flex:none;display:grid;place-items:center;overflow:hidden;border-radius:20px;background:var(--fundo);box-shadow:inset 0 0 0 1.5px rgba(23,26,25,.1);color:var(--verde);cursor:pointer;transition:box-shadow .2s}
+.img-alvo:hover{box-shadow:inset 0 0 0 1.5px var(--verde)}
+.img-alvo img{width:100%;height:100%;object-fit:contain;background:#fff}
+.img-campo.redonda .img-alvo{border-radius:50%}
+.img-campo.redonda .img-alvo img{object-fit:cover}
+.img-campo>div{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px}
+.img-campo>div small{flex-basis:100%;font-size:.78rem;color:var(--cinza)}
+.img-campo .btn{height:38px;cursor:pointer}
+.img-campo .link{border:none;background:none;cursor:pointer;color:var(--vermelho)}
+.img-campo.enviando .img-alvo{opacity:.5;animation:brilho 1.2s linear infinite}
+.campo label small{font-weight:400;color:var(--cinza)}
+.dica-campo{font-size:.78rem;color:var(--cinza)}
+#assistente{position:fixed;inset:0;z-index:70}
+.as-fundo{position:absolute;inset:0;display:grid;place-items:center;padding:20px;overflow:auto;background:radial-gradient(900px circle at 20% 0%,rgba(15,118,110,.18),transparent 60%),rgba(248,248,245,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);animation:esmaece .3s ease both}
+.as-caixa{width:min(620px,100%);padding:30px 30px 24px;border-radius:28px;background:#fff;box-shadow:0 40px 90px -40px rgba(23,26,25,.45),0 0 0 1px var(--linha);animation:pop .45s var(--mola) both}
+.as-topo{display:flex;align-items:center;gap:14px;margin-bottom:22px}
+.as-passo{font-size:.78rem;font-weight:600;color:var(--verde);white-space:nowrap}
+.as-barra{flex:1;height:6px;border-radius:99px;background:var(--fundo);overflow:hidden}
+.as-barra span{display:block;height:100%;border-radius:99px;background:var(--verde);transition:width .6s var(--mola)}
+.as-caixa h2{font-size:1.5rem;letter-spacing:-.02em}
+.as-caixa>.sub{margin:4px 0 22px}
+.as-rodape{display:flex;justify-content:space-between;gap:10px;margin-top:26px}
+.as-rodape .btn-verde{min-width:160px}
+.as-fim{grid-column:1/-1}
+.as-check{width:56px;height:56px;display:grid;place-items:center;border-radius:50%;background:var(--verde);color:#fff;margin-bottom:16px;animation:pousou .6s var(--mola)}
+.as-check .i{width:28px;height:28px;stroke-width:2.6}
+.as-resumo{display:flex;align-items:center;gap:14px;padding:14px;border-radius:18px;background:var(--fundo)}
+.as-resumo b{display:block;font-weight:600}
+.as-resumo small{color:var(--texto-2);font-size:.84rem}
+.as-fim h3{font-size:.9rem;margin:22px 0 10px;color:var(--texto-2);font-weight:600}
+.as-proximos{display:grid;gap:8px}
+.as-proximos>*{display:flex;align-items:center;gap:14px;padding:13px 14px;border-radius:15px;text-decoration:none;color:inherit;background:var(--fundo)}
+.as-proximos a{background:var(--verde-claro);transition:transform .3s var(--mola)}
+.as-proximos a:hover{transform:translateX(3px)}
+.as-proximos>*>span{flex:1}
+.as-proximos b{display:block;font-size:.9rem;font-weight:600}
+.as-proximos small{color:var(--texto-2);font-size:.8rem}
+.as-proximos .i{color:var(--verde)}
+.em-breve{opacity:.65}
+.banner-config{display:flex;align-items:center;gap:16px;padding:16px 18px;margin:6px 0 22px;border-radius:20px;background:var(--verde-claro)}
+.banner-config b{display:block;color:var(--verde-escuro)}
+.banner-config small{color:var(--texto-2)}
+.banner-config .btn{margin-left:auto}
+@media (max-width:640px){.as-caixa{padding:24px 18px 18px;border-radius:22px}.as-rodape .btn-verde{min-width:0;flex:1}.banner-config{flex-wrap:wrap}.banner-config .btn{margin-left:0;width:100%}}
+
+.fundo-app{position:fixed;inset:0;z-index:95;display:flex;align-items:flex-end;justify-content:center;background:rgba(23,26,25,.35);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);animation:esmaece .25s ease both}
+.modal-app{width:min(460px,100%);padding:26px 24px calc(22px + env(safe-area-inset-bottom));border-radius:26px 26px 0 0;background:#fff;animation:sobe .4s var(--mola) both}
+.modal-app h2{font-size:1.25rem;margin-bottom:4px}
+.passos-ios{list-style:none;padding:0;margin:18px 0 12px;display:grid;gap:10px}
+.passos-ios li{display:flex;gap:12px;align-items:center;padding:12px 14px;border-radius:14px;background:var(--fundo);font-size:.92rem}
+.passos-ios li>span{width:26px;height:26px;flex:none;display:grid;place-items:center;border-radius:50%;background:var(--verde);color:#fff;font-weight:700;font-size:.8rem}
+.passos-ios .i{width:18px;height:18px;vertical-align:-3px;color:#0A7AFF}
+.modal-app .modal-rodape{display:flex;justify-content:flex-end;margin-top:14px}
+.modal-app .modal-rodape .btn{flex:1}
+@media (min-width:700px){.fundo-app{align-items:center}.modal-app{border-radius:26px}}
+.st{font-size:.84rem;color:var(--texto-2)}
+.st.ok{color:var(--verde);font-weight:600}
+.st.ruim{color:var(--vermelho)}
+.btn-app{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;height:40px;margin-bottom:8px;border:none;border-radius:12px;background:var(--verde-claro);color:var(--verde);font-weight:600;font-size:.86rem;cursor:pointer;transition:background .2s}
+.btn-app:hover{background:#c9e9e4}
+.btn-app .i{width:17px;height:17px}
+.banner-app{display:flex;align-items:center;gap:14px;padding:14px 16px;margin-bottom:18px;border-radius:18px;background:var(--branco);box-shadow:var(--sombra)}
+.banner-app .ic{width:40px;height:40px;flex:none;display:grid;place-items:center;border-radius:12px;background:var(--verde-claro);color:var(--verde)}
+.banner-app>div{flex:1;min-width:0}
+.banner-app b{display:block;font-size:.92rem}
+.banner-app small{color:var(--texto-2);font-size:.82rem}
+.banner-app .btn{height:40px;padding:0 16px}
+.banner-app .fechar{border:none;background:none;color:var(--cinza);font-size:1.3rem;line-height:1;cursor:pointer;padding:4px}
+
+.lateral-app{margin-top:auto;padding:0 0 10px}
+.lateral-app:has(> :not([hidden])) + .lateral-rodape{margin-top:0}
+.lateral-app + .lateral-rodape{margin-top:0}
+.notif-ativar{display:flex;align-items:center;gap:10px;margin:4px 8px 8px;padding:10px 12px;border-radius:13px;background:var(--verde-claro);font-size:.82rem;color:var(--verde-escuro)}
+.notif-ativar .btn{height:32px;padding:0 12px;font-size:.8rem;margin-left:auto}
 </style>
 </head>
 <body>
@@ -1351,7 +1468,7 @@ async function aoSessao(session){
   state.user = session?.user || null;
   state.membro = null; state.org = null;
   if (state.user){
-    const { data, error } = await sb.from('membros').select('*, organizacoes(id, nome)').eq('user_id', state.user.id).limit(1);
+    const { data, error } = await sb.from('membros').select('*, organizacoes(*)').eq('user_id', state.user.id).limit(1);
     if (error) state.erro = 'Não foi possível ler seu perfil. Confira se o script SQL foi executado.';
     if (data && data.length){ state.membro = data[0]; state.org = data[0].organizacoes; }
   }
@@ -1389,7 +1506,7 @@ function renderAuth(){
       <p class="lm-frase">A ferramenta organiza o trabalho. Você só executa.</p>
     </div>`;
   let caixa = '';
-  const escolha = `<div class="quem" role="tablist" aria-label="Tipo de acesso"><button type="button" class="ativo" role="tab" aria-selected="true">Sou da agência</button><a href="${esc(CONFIG.PORTAL_URL || 'anya-portal.html')}" role="tab" aria-selected="false">Sou cliente</a></div>`;
+  const escolha = `<div class="escolha-acesso" role="tablist" aria-label="Tipo de acesso"><button type="button" class="ativo" role="tab" aria-selected="true">Sou da agência</button><a href="${esc(CONFIG.PORTAL_URL || 'anya-portal.html')}" role="tab" aria-selected="false">Sou cliente</a></div>`;
   const campoSenha = (id, nome, rotulo, auto, extra = '') => `<div class="campo"><div class="rot-linha"><label for="${id}">${rotulo}</label>${extra}</div>
     <div class="com-olho"><input id="${id}" name="${nome}" type="password" required minlength="6" autocomplete="${auto}"><button type="button" class="olho" data-acao="ver-senha" aria-label="Mostrar senha" title="Mostrar senha">${OLHO_ABERTO}</button></div></div>`;
   if (state.tela === 'login' && MODO_DEMO){
@@ -1411,10 +1528,12 @@ function renderAuth(){
     caixa = `${escolha}<h1>${criar ? 'Criar conta' : 'Entrar'}</h1><p class="sub">${criar ? 'Leva menos de um minuto.' : 'Bom te ver de novo.'}</p>
       <form id="form-login">
         ${criar ? `<div class="campo"><label for="l-nome">Seu nome</label><input id="l-nome" name="nome" required autocomplete="name"></div>` : ''}
-        <div class="campo"><label for="l-email">E-mail</label><input id="l-email" name="email" type="email" required autocomplete="email"></div>
+        ${state.aguardaConfirmacao && !criar ? `<div class="aviso">Conta criada! Enviamos um link de confirmação para <b>${esc(state.emailDigitado)}</b>. Clique nele e depois entre aqui. Confira também o spam.</div>` : ''}
+        <div class="campo"><label for="l-email">E-mail</label><input id="l-email" name="email" type="email" required autocomplete="email" value="${esc(state.emailDigitado || '')}"></div>
         ${campoSenha('l-senha', 'senha', 'Senha', criar ? 'new-password' : 'current-password', criar ? '' : '<button type="button" class="esqueci" data-acao="esqueci-senha">Esqueci minha senha</button>')}
         ${state.erro ? `<p class="erro">${esc(state.erro)}</p>` : ''}
         <button class="btn btn-verde" type="submit">${criar ? 'Criar conta' : 'Entrar'}</button>
+        ${!criar && (state.aguardaConfirmacao || /confirmad/.test(state.erro || '')) ? `<div class="troca"><button type="button" data-acao="reenviar-confirmacao">Reenviar confirmação</button></div>` : ''}
         <div class="troca"><button type="button" data-acao="trocar-login">${criar ? 'Já tenho conta' : 'Ainda não tenho conta'}</button></div>
       </form>`;
   } else if (state.tela === 'nova-senha'){
@@ -1448,13 +1567,14 @@ async function enviarLogin(form){
   try {
     if (state.loginModo === 'entrar'){
       const { error } = await sb.auth.signInWithPassword({ email:d.email.trim(), password:d.senha });
-      if (error) throw new Error('E-mail ou senha incorretos.');
-    } else {
-      const { data, error } = await sb.auth.signUp({ email:d.email.trim(), password:d.senha, options:{ data:{ nome:d.nome.trim() } } });
       if (error) throw error;
-      if (!data.session){ state.loginModo = 'entrar'; renderAuth(); avisar('Enviamos um link de confirmação para o seu e-mail.'); return; }
+    } else {
+      const { data, error } = await sb.auth.signUp({ email:d.email.trim(), password:d.senha, options:{ data:{ nome:d.nome.trim() }, emailRedirectTo:location.origin + location.pathname } });
+      if (error) throw error;
+      if (data.user && Array.isArray(data.user.identities) && data.user.identities.length === 0) throw new Error('already registered');
+      if (!data.session){ state.loginModo = 'entrar'; state.emailDigitado = d.email.trim(); state.erro = ''; state.aguardaConfirmacao = true; renderAuth(); return; }
     }
-  } catch (e){ state.erro = msgErro(e); renderAuth(); }
+  } catch (e){ state.emailDigitado = d.email?.trim() || ''; state.erro = erroAuth(e); renderAuth(); }
   finally { botao.disabled = false; }
 }
 
@@ -1474,7 +1594,7 @@ async function enviarRecuperar(form){
   const b = form.querySelector('[type=submit]'); b.disabled = true; b.textContent = 'Enviando…';
   state.erro = ''; state.emailDigitado = email;
   const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo:location.origin + location.pathname });
-  if (error) state.erro = /rate|limit|seconds/i.test(error.message) ? 'Muitas tentativas seguidas. Espere alguns minutos e tente de novo.' : msgErro(error);
+  if (error) state.erro = erroAuth(error);
   else state.okRecuperar = true;
   renderAuth();
 }
@@ -1491,6 +1611,25 @@ async function salvarNovaSenha(form){
   const { data:{ session } } = await sb.auth.getSession();
   state.tela = 'login';
   await aoSessao(session);
+}
+
+
+function erroAuth(e){
+  const m = String(e?.message || e || '').toLowerCase();
+  if (m.includes('email not confirmed')) return 'Seu e-mail ainda não foi confirmado. Abra o e-mail de confirmação que enviamos e clique no link. Não chegou? Use "Reenviar confirmação" abaixo.';
+  if (m.includes('invalid login credentials')) return 'E-mail ou senha incorretos. Se esqueceu, use "Esqueci minha senha".';
+  if (m.includes('already registered') || m.includes('already been registered') || m.includes('already exists')) return 'Este e-mail já tem cadastro. Clique em "Já tenho conta" para entrar, ou em "Esqueci minha senha".';
+  if (m.includes('rate limit') || m.includes('too many') || m.includes('security purposes') || m.includes('seconds')) return 'Muitas tentativas em pouco tempo. Espere alguns minutos e tente de novo.';
+  if (m.includes('password') && (m.includes('at least') || m.includes('should be') || m.includes('weak'))) return 'A senha precisa ter pelo menos 6 caracteres.';
+  if (m.includes('invalid') && m.includes('email')) return 'Este e-mail não parece válido. Confira se digitou certo.';
+  if (m.includes('signups not allowed') || m.includes('signup is disabled')) return 'O cadastro de novas contas está desligado no Supabase.';
+  if (m.includes('failed to fetch') || m.includes('network')) return 'Sem conexão com o servidor. Confira sua internet.';
+  return e?.message || 'Algo deu errado. Tente de novo.';
+}
+async function reenviarConfirmacao(email){
+  if (!email){ avisar('Digite seu e-mail no campo acima.'); return; }
+  const { error } = await sb.auth.resend({ type:'signup', email, options:{ emailRedirectTo:location.origin + location.pathname } });
+  if (error) avisar(erroAuth(error)); else avisar('E-mail de confirmação reenviado. Confira também o spam.');
 }
 
 async function criarAgencia(form){
@@ -1536,7 +1675,7 @@ function montarShell(){
   document.getElementById('app').innerHTML = `
   <div class="app">
     <aside class="lateral">
-      <a class="logo" href="#/inicio"><b>ANYA</b><span>Sistema Operacional da Agência</span></a>
+      <a class="logo marca-ag" href="#/inicio" title="Início">${window.marcaHTML ? marcaHTML() : '<b>ANYA</b><span>Sistema Operacional da Agência</span>'}</a>
       <nav class="nav" data-indicador aria-label="Menu principal">
         <span class="nav-ind"></span>
         ${MENU.map(link).join('')}
@@ -1544,9 +1683,9 @@ function montarShell(){
         ${MENU2.map(link).join('')}
       </nav>
       <div class="lateral-rodape">
-        <span class="avatar p" style="--cor:#0F766E">${iniciais(nome)}</span>
+        ${window.cartaoUsuarioHTML ? cartaoUsuarioHTML() : `<span class="avatar p" style="--cor:#0F766E">${iniciais(nome)}</span>
         <div class="quem"><b>${esc(nome)}</b><small>${esc(state.org?.nome || '')}</small></div>
-        <button class="btn-icone" data-acao="sair" title="Sair" aria-label="Sair">${icone('sair')}</button>
+        <button class="btn-icone" data-acao="sair" title="Sair" aria-label="Sair">${icone('sair')}</button>`}
       </div>
     </aside>
     <div class="principal">
@@ -1697,7 +1836,7 @@ function paginaInicio(){
   const nome = primeiroNome(state.membro?.nome) || 'você';
   const data = dataLonga(new Date());
   return `
-    <section class="saudacao entra"><h1>Olá, ${esc(nome)} 👋</h1><p class="data-hoje">${data.charAt(0).toUpperCase() + data.slice(1)}</p></section>
+    ${window.saudacaoHTML ? saudacaoHTML() : `<section class="saudacao entra"><h1>Olá, ${esc(nome)} 👋</h1><p class="data-hoje">${data.charAt(0).toUpperCase() + data.slice(1)}</p></section>`}
     <div class="indicadores">
       ${ind.map((x, i) => `<a class="card ind interativo entra ${x.classe || ''}" style="--i:${i + 1}" href="${x.rota}">
         <span class="ind-rot">${icone(x.ic)}${x.rot}</span>
@@ -2258,8 +2397,9 @@ document.addEventListener('click', e => {
     if (a === 'fechar-modal-fundo' && e.target !== el) return;
     switch (a){
       case 'entrar-demo': state.membro = { nome:'Waleriane', papel:'dono' }; state.org = { nome:'Agência Demonstração' }; entrarNoApp(); break;
-      case 'trocar-login': state.loginModo = state.loginModo === 'entrar' ? 'criar' : 'entrar'; state.erro = ''; renderAuth(); break;
+      case 'trocar-login': state.emailDigitado = document.getElementById('l-email')?.value || state.emailDigitado || ''; state.loginModo = state.loginModo === 'entrar' ? 'criar' : 'entrar'; state.erro = ''; state.aguardaConfirmacao = false; renderAuth(); break;
       case 'ver-senha': alternarOlho(el); break;
+      case 'reenviar-confirmacao': reenviarConfirmacao(document.getElementById('l-email')?.value.trim() || state.emailDigitado); break;
       case 'esqueci-senha': state.emailDigitado = document.getElementById('l-email')?.value || ''; state.loginModo = 'recuperar'; state.erro = ''; state.okRecuperar = false; renderAuth(); break;
       case 'voltar-login': state.loginModo = 'entrar'; state.erro = ''; state.okRecuperar = false; renderAuth(); break;
       case 'sair': sair(); break;
@@ -3166,6 +3306,7 @@ function renderConfig(){
     </section>`;
 }
 function atualizarNomesNaTela(){
+  if (window.atualizarMarcaNaTela) return atualizarMarcaNaTela();
   const rod = document.querySelector('.lateral-rodape');
   if (rod){
     rod.querySelector('b').textContent = state.membro?.nome || 'Você';
@@ -3970,6 +4111,7 @@ sair = async function(){
    acessos seguros, mensagens, notificações e acesso ao portal
    ===================================================================== */
 Object.assign(ICONES, {
+  baixar:'<path d="M12 4v12M7 11l5 5 5-5M4 20h16"/>',
   sino:'<path d="M6 16v-5a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 20.5a2.2 2.2 0 0 0 4 0"/>',
   olho:'<path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/>',
   cadeado:'<rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/>',
@@ -4635,7 +4777,455 @@ document.addEventListener('drop', e => {
   else { state.soltosModal = [...e.dataTransfer.files]; document.getElementById('ar-nomes').textContent = `${state.soltosModal.length} ${state.soltosModal.length === 1 ? 'arquivo' : 'arquivos'}: ${state.soltosModal.map(f => f.name).join(', ')}`; }
 });
 
+</script>
+<script>
+/* =====================================================================
+   MARCA DA AGÊNCIA, PERFIL E CONFIGURAÇÃO INICIAL
+   ===================================================================== */
+const MINUSCULAS = ['da','de','do','das','dos','e'];
+function nomeBonito(n){
+  const s = String(n || '').trim(); if (!s) return '';
+  if (s !== s.toLowerCase() && s !== s.toUpperCase()) return s;   // já escrito do jeito da pessoa
+  return s.toLowerCase().split(/\s+/).map((p, i) => i && MINUSCULAS.includes(p) ? p : p.charAt(0).toUpperCase() + p.slice(1)).join(' ');
+}
+const urlLogo = () => state.org?._logo_url || (state.org?.logo_path && midiaCache[state.org.logo_path]) || null;
+const urlFoto = m => m?._foto_url || (m?.foto_path && midiaCache[m.foto_path]) || null;
+const papelTexto = m => m?.cargo || (m?.papel === 'dono' ? 'Administração' : 'Equipe');
+function avatarPessoa(m, classe = 'p'){
+  const u = urlFoto(m);
+  return u ? `<span class="avatar ${classe} com-foto"><img src="${esc(u)}" alt=""></span>` : `<span class="avatar ${classe}" style="--cor:#0F766E">${iniciais(nomeBonito(m?.nome))}</span>`;
+}
+function marcaHTML(){
+  const u = urlLogo(), nome = state.org?.nome || 'Sua agência';
+  return `<span class="ag-logo">${u ? `<img src="${esc(u)}" alt="">` : esc(iniciais(nome))}</span><span class="ag-txt"><b>${esc(nome)}</b><span>Sistema ANYA</span></span>`;
+}
+function cartaoUsuarioHTML(){
+  const m = state.membro || {};
+  return `<button class="cartao-eu" data-acao="meu-perfil" title="Editar meu perfil">
+      ${avatarPessoa(m)}
+      <span class="eu-txt"><b>${esc(nomeBonito(m.nome) || 'Você')}</b><small>${esc(papelTexto(m))}</small></span>
+    </button>
+    <button class="btn-icone eu-sair" data-acao="sair" title="Sair" aria-label="Sair">${icone('sair')}</button>`;
+}
+function atualizarMarcaNaTela(){
+  const lg = document.querySelector('.lateral .logo'); if (lg) lg.innerHTML = marcaHTML();
+  const rod = document.querySelector('.lateral-rodape'); if (rod) rod.innerHTML = cartaoUsuarioHTML();
+  const mob = document.querySelector('.logo-mobile'); if (mob) mob.innerHTML = urlLogo() ? `<img src="${esc(urlLogo())}" alt="">` : esc(state.org?.nome || 'ANYA');
+  const sd = document.querySelector('.saudacao'); if (sd && state.rota?.pagina === 'inicio') sd.outerHTML = saudacaoHTML();
+}
+function saudacaoHTML(){
+  const h = new Date().getHours();
+  const periodo = h < 12 ? 'Bom dia' : h < 18 ? 'Boa tarde' : 'Boa noite';
+  const data = dataLonga(new Date());
+  return `<section class="saudacao entra">
+    <div class="sd-marca">${urlLogo() ? `<img src="${esc(urlLogo())}" alt="">` : ''}<h1>${esc(state.org?.nome || 'Sua agência')}</h1></div>
+    <p class="data-hoje">${periodo}, ${esc(primeiroNome(nomeBonito(state.membro?.nome)) || 'você')}. ${data.charAt(0).toUpperCase() + data.slice(1)}.</p>
+  </section>${state.org && !state.org.configurado && state.membro?.papel === 'dono' ? `<div class="banner-config entra">${icone('config')}<div><b>Termine de configurar sua agência</b><small>Logo, contato, PIX e seu perfil. Leva 2 minutos.</small></div><button class="btn btn-verde" data-acao="abrir-assistente">Configurar agora</button></div>` : ''}`;
+}
+async function carregarImagensMarca(){
+  const paths = [state.org?.logo_path, state.membro?.foto_path].filter(p => p && !midiaCache[p]);
+  if (paths.length && !MODO_DEMO){ try { Object.assign(midiaCache, await api.urlsMidia(paths)); } catch {} }
+}
+
+/* Reduz a imagem antes de enviar (fica leve e carrega rápido) */
+function reduzirImagem(file, max = 512, png = false){
+  return new Promise(res => {
+    if (!/^image\/(png|jpe?g|webp)$/.test(file.type)) return res(file);
+    const img = new Image(), u = URL.createObjectURL(file);
+    img.onload = () => {
+      const k = Math.min(1, max / Math.max(img.width, img.height));
+      const c = document.createElement('canvas'); c.width = Math.round(img.width * k); c.height = Math.round(img.height * k);
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      URL.revokeObjectURL(u);
+      c.toBlob(b => res(b ? new File([b], png ? 'imagem.png' : 'imagem.jpg', { type:png ? 'image/png' : 'image/jpeg' }) : file), png ? 'image/png' : 'image/jpeg', .88);
+    };
+    img.onerror = () => res(file);
+    img.src = u;
+  });
+}
+async function enviarImagem(file, tipo){
+  const pronto = await reduzirImagem(file, tipo === 'logo' ? 600 : 400, tipo === 'logo' && file.type !== 'image/jpeg');
+  if (MODO_DEMO) return { path:null, url:URL.createObjectURL(pronto) };
+  const ext = pronto.type === 'image/png' ? 'png' : pronto.type === 'image/svg+xml' ? 'svg' : pronto.type === 'image/webp' ? 'webp' : 'jpg';
+  const path = `${state.org.id}/${tipo === 'logo' ? 'marca' : 'perfil'}/${novoId()}.${ext}`;
+  const { error } = await sb.storage.from('arquivos').upload(path, pronto, { contentType:pronto.type, upsert:false });
+  if (error) throw error;
+  const m = await api.urlsMidia([path]); Object.assign(midiaCache, m);
+  return { path, url:m[path] };
+}
+
+/* ---------- Formulários reaproveitados (assistente e configurações) ---------- */
+function campoImagem(tipo, url, rotulo, dica){
+  return `<div class="campo largo"><label>${rotulo}</label>
+    <div class="img-campo ${tipo === 'foto' ? 'redonda' : ''}">
+      <label class="img-alvo" for="img-${tipo}" title="Escolher imagem">${url ? `<img src="${esc(url)}" alt="">` : `<span>${icone('arquivo')}</span>`}</label>
+      <div><label class="btn btn-claro" for="img-${tipo}">${url ? 'Trocar' : 'Escolher imagem'}</label>${url ? `<button type="button" class="link" data-acao="remover-img" data-tipo="${tipo}">Remover</button>` : ''}<small>${dica}</small></div>
+      <input type="file" id="img-${tipo}" data-img="${tipo}" accept="image/png,image/jpeg,image/webp,image/svg+xml" hidden>
+    </div></div>`;
+}
+function camposAgencia(o){
+  return `${campoImagem('logo', o._logo_url || (o.logo_path && midiaCache[o.logo_path]), 'Logo da agência', 'PNG com fundo transparente fica melhor. Aparece no menu e no portal dos clientes.')}
+    <div class="campo largo"><label for="ag-nome">Nome da agência</label><input id="ag-nome" name="nome" required value="${esc(o.nome || '')}"></div>
+    <div class="campo"><label for="ag-cnpj">CNPJ <small>(opcional)</small></label><input id="ag-cnpj" name="cnpj" inputmode="numeric" value="${esc(o.cnpj || '')}" placeholder="00.000.000/0000-00"></div>
+    <div class="campo"><label for="ag-cid">Cidade</label><input id="ag-cid" name="cidade" value="${esc(o.cidade || '')}" placeholder="Ex.: Jaru - RO"></div>`;
+}
+function camposContato(o){
+  return `<div class="campo"><label for="ag-email">E-mail da agência</label><input id="ag-email" name="email" type="email" value="${esc(o.email || '')}" placeholder="contato@suaagencia.com"></div>
+    <div class="campo"><label for="ag-wpp">WhatsApp da agência</label><input id="ag-wpp" name="whatsapp" inputmode="tel" value="${esc(o.whatsapp || '')}" placeholder="(69) 99999-0000"></div>
+    <div class="campo"><label for="ag-insta">Instagram</label><input id="ag-insta" name="instagram" value="${esc(o.instagram || '')}" placeholder="@suaagencia"></div>
+    <div class="campo"><label for="ag-site">Site <small>(opcional)</small></label><input id="ag-site" name="site" value="${esc(o.site || '')}" placeholder="suaagencia.com.br"></div>
+    <div class="campo largo"><label for="ag-pix">Chave PIX para receber dos clientes</label><input id="ag-pix" name="chave_pix" value="${esc(o.chave_pix || '')}" placeholder="CNPJ, e-mail, telefone ou chave aleatória"><small class="dica-campo">Aparece no portal do cliente, na parte de Financeiro, com botão de copiar.</small></div>`;
+}
+function camposPerfil(m){
+  return `${campoImagem('foto', urlFoto(m), 'Sua foto', 'Aparece no menu e nas conversas com a equipe.')}
+    <div class="campo largo"><label for="pf-nome">Seu nome</label><input id="pf-nome" name="nome_pessoa" required value="${esc(nomeBonito(m.nome) || '')}"></div>
+    <div class="campo"><label for="pf-cargo">Cargo</label><input id="pf-cargo" name="cargo" value="${esc(m.cargo || '')}" placeholder="Ex.: Diretora, Social media"></div>
+    <div class="campo"><label for="pf-tel">Seu telefone</label><input id="pf-tel" name="telefone" inputmode="tel" value="${esc(m.telefone || '')}" placeholder="(69) 99999-0000"></div>`;
+}
+const soNumeros = s => String(s || '').replace(/\D/g, '');
+function mascaraTelefone(v){
+  const d = soNumeros(v).slice(0, 11);
+  if (d.length <= 2) return d;
+  if (d.length <= 6) return `(${d.slice(0, 2)}) ${d.slice(2)}`;
+  if (d.length <= 10) return `(${d.slice(0, 2)}) ${d.slice(2, 6)}-${d.slice(6)}`;
+  return `(${d.slice(0, 2)}) ${d.slice(2, 7)}-${d.slice(7)}`;
+}
+function mascaraCnpj(v){
+  const d = soNumeros(v).slice(0, 14);
+  return d.replace(/^(\d{2})(\d)/, '$1.$2').replace(/^(\d{2})\.(\d{3})(\d)/, '$1.$2.$3').replace(/\.(\d{3})(\d)/, '.$1/$2').replace(/(\d{4})(\d)/, '$1-$2');
+}
+
+/* Rascunho que o assistente vai montando */
+const rascunho = { org:{}, eu:{} };
+function iniciarRascunho(){
+  rascunho.org = { ...state.org };
+  rascunho.eu = { ...state.membro, nome:nomeBonito(state.membro?.nome) };
+}
+function lerForm(form){
+  const d = Object.fromEntries(new FormData(form));
+  ['nome','cnpj','cidade','email','whatsapp','instagram','site','chave_pix'].forEach(k => { if (k in d) rascunho.org[k] = d[k].trim(); });
+  if ('nome_pessoa' in d) rascunho.eu.nome = nomeBonito(d.nome_pessoa.trim());
+  if ('nome' in d) rascunho.org.nome = d.nome.trim();
+  ['cargo','telefone'].forEach(k => { if (k in d) rascunho.eu[k] = d[k].trim(); });
+}
+async function salvarRascunho(finalizar){
+  const o = rascunho.org, m = rascunho.eu;
+  const dadosOrg = { nome:o.nome || state.org.nome, cnpj:o.cnpj || null, cidade:o.cidade || null, email:o.email || null, whatsapp:o.whatsapp || null, instagram:o.instagram || null, site:o.site ? urlCompleta(o.site) : null, chave_pix:o.chave_pix || null, logo_path:o.logo_path || null };
+  if (finalizar) dadosOrg.configurado = true;
+  if (!MODO_DEMO){
+    const { error } = await sb.from('organizacoes').update(dadosOrg).eq('id', state.org.id);
+    if (error) throw error;
+    const { error:e2 } = await sb.rpc('salvar_meu_perfil', { p_nome:m.nome || '', p_cargo:m.cargo || '', p_telefone:m.telefone || '', p_foto_path:m.foto_path || '' });
+    if (e2) throw e2;
+  }
+  Object.assign(state.org, dadosOrg, { _logo_url:o._logo_url || null });
+  Object.assign(state.membro, { nome:m.nome || state.membro.nome, cargo:m.cargo || null, telefone:m.telefone || null, foto_path:m.foto_path || null, _foto_url:m._foto_url || null });
+  atualizarMarcaNaTela();
+}
+
+/* =====================================================================
+   ASSISTENTE DE CONFIGURAÇÃO INICIAL
+   ===================================================================== */
+const PASSOS = [
+  { t:'Sua agência', s:'Nome e logo aparecem no menu e no portal dos seus clientes.' },
+  { t:'Contato e recebimento', s:'Seus clientes veem esses dados no portal para falar com vocês e pagar.' },
+  { t:'Seu perfil', s:'Como a equipe e os clientes vão te ver.' },
+  { t:'Tudo pronto!', s:'Agora é só começar.' }
+];
+let passoAtual = 0;
+function abrirAssistente(passo = 0){
+  if (!document.getElementById('assistente')){ iniciarRascunho(); }
+  passoAtual = passo;
+  let el = document.getElementById('assistente');
+  if (!el){ el = document.createElement('div'); el.id = 'assistente'; document.body.appendChild(el); document.body.style.overflow = 'hidden'; }
+  const p = PASSOS[passo], ultimo = passo === PASSOS.length - 1;
+  const corpo = passo === 0 ? camposAgencia(rascunho.org) : passo === 1 ? camposContato(rascunho.org) : passo === 2 ? camposPerfil(rascunho.eu) : `
+    <div class="as-fim">
+      <div class="as-check">${icone('check')}</div>
+      <div class="as-resumo">
+        <span class="ag-logo grande">${rascunho.org._logo_url || midiaCache[rascunho.org.logo_path] ? `<img src="${esc(rascunho.org._logo_url || midiaCache[rascunho.org.logo_path])}" alt="">` : esc(iniciais(rascunho.org.nome))}</span>
+        <div><b>${esc(rascunho.org.nome)}</b><small>${esc([rascunho.org.cidade, rascunho.org.whatsapp, rascunho.org.email].filter(Boolean).join(' · ') || 'Dados de contato não preenchidos')}</small></div>
+      </div>
+      <h3>Próximos passos</h3>
+      <div class="as-proximos">
+        <a href="#/clientes" data-acao="fechar-assistente" data-depois="novo-cliente">${icone('clientes')}<span><b>Cadastrar o primeiro cliente</b><small>Pastas e checklist são criados sozinhos.</small></span>${icone('seta')}</a>
+        <a href="#/configuracoes" data-acao="fechar-assistente">${icone('mais')}<span><b>Convidar a equipe</b><small>Em Configurações, pelo e-mail de cada pessoa.</small></span>${icone('seta')}</a>
+        <div class="em-breve">${icone('agenda')}<span><b>Google Drive e Google Agenda</b><small>Em breve (Fase 5)</small></span></div>
+        <div class="em-breve">${icone('mensagem')}<span><b>WhatsApp e e-mail automáticos</b><small>Em breve (Fase 5)</small></span></div>
+      </div>
+    </div>`;
+  el.innerHTML = `<div class="as-fundo"><form class="as-caixa" id="form-assistente" novalidate>
+    <div class="as-topo">
+      <span class="as-passo">Passo ${passo + 1} de ${PASSOS.length}</span>
+      <div class="as-barra"><span style="width:${((passo + 1) / PASSOS.length) * 100}%"></span></div>
+    </div>
+    <h2>${p.t}</h2><p class="sub">${p.s}</p>
+    <div class="campos as-campos">${corpo}</div>
+    <div class="as-rodape">
+      ${passo === 0 ? `<button type="button" class="btn btn-fantasma" data-acao="pular-assistente">Fazer depois</button>` : `<button type="button" class="btn btn-fantasma" data-acao="assistente-voltar">${icone('voltar')}Voltar</button>`}
+      <button type="submit" class="btn btn-verde">${ultimo ? 'Começar a usar' : 'Continuar'} ${ultimo ? '' : icone('seta')}</button>
+    </div>
+  </form></div>`;
+  setTimeout(() => el.querySelector('input:not([type=file])')?.focus(), 80);
+}
+function fecharAssistente(){
+  document.getElementById('assistente')?.remove();
+  document.body.style.overflow = '';
+}
+async function avancarAssistente(form){
+  if (passoAtual < 3){
+    const obrig = form.querySelector('[required]');
+    if (obrig && !obrig.value.trim()){ obrig.reportValidity(); return; }
+    const email = form.querySelector('[type=email]');
+    if (email && email.value && !email.checkValidity()){ email.reportValidity(); return; }
+    lerForm(form);
+  }
+  const b = form.querySelector('[type=submit]'); b.disabled = true;
+  try {
+    await salvarRascunho(passoAtual === 3);
+    if (passoAtual === 3){ fecharAssistente(); avisar('Configuração concluída. Bom trabalho!'); if (state.rota?.pagina === 'inicio') navegar(); return; }
+    abrirAssistente(passoAtual + 1);
+  } catch (e){ avisar(msgErro(e)); b.disabled = false; }
+}
+async function trocarImagem(input){
+  const f = input.files[0]; if (!f) return;
+  if (f.size > 8 * 1024 * 1024){ avisar('Imagem muito grande. Use uma de até 8 MB.'); return; }
+  const tipo = input.dataset.img;
+  const alvo = input.closest('.img-campo');
+  alvo.classList.add('enviando');
+  try {
+    const r = await enviarImagem(f, tipo);
+    if (tipo === 'logo'){ rascunho.org.logo_path = r.path; rascunho.org._logo_url = r.url; }
+    else { rascunho.eu.foto_path = r.path; rascunho.eu._foto_url = r.url; }
+    const form = input.closest('form'); lerForm(form);
+    if (document.getElementById('assistente')) abrirAssistente(passoAtual);
+    else redesenharModalDados();
+  } catch (e){ avisar(msgErro(e)); alvo.classList.remove('enviando'); }
+}
+function removerImagem(tipo, form){
+  lerForm(form);
+  if (tipo === 'logo'){ rascunho.org.logo_path = null; rascunho.org._logo_url = null; }
+  else { rascunho.eu.foto_path = null; rascunho.eu._foto_url = null; }
+  if (document.getElementById('assistente')) abrirAssistente(passoAtual); else redesenharModalDados();
+}
+
+/* ---------- Janelas de edição depois (Configurações e cartão do menu) ---------- */
+let modalDados = null;   // 'agencia' | 'perfil'
+function abrirModalDados(qual){
+  iniciarRascunho(); modalDados = qual; redesenharModalDados();
+}
+function redesenharModalDados(){
+  const qual = modalDados;
+  abrirModal(`<form class="modal modal-dados" id="form-dados" role="dialog" aria-modal="true" aria-labelledby="mt">
+    <h2 id="mt">${qual === 'agencia' ? 'Dados da agência' : 'Meu perfil'}</h2>
+    <p class="sub">${qual === 'agencia' ? 'Aparecem no menu e no portal dos clientes.' : 'Como a equipe e os clientes vão te ver.'}</p>
+    <div class="campos">${qual === 'agencia' ? camposAgencia(rascunho.org) + camposContato(rascunho.org) : camposPerfil(rascunho.eu)}</div>
+    <div class="modal-rodape"><button type="button" class="btn btn-fantasma" data-acao="fechar-modal">Cancelar</button><button type="submit" class="btn btn-verde">Salvar</button></div>
+  </form>`);
+}
+async function salvarModalDados(form){
+  const obrig = form.querySelector('[required]'); if (obrig && !obrig.value.trim()){ obrig.reportValidity(); return; }
+  lerForm(form);
+  const b = form.querySelector('[type=submit]'); b.disabled = true;
+  try { await salvarRascunho(false); fecharModal(); avisar(modalDados === 'agencia' ? 'Dados da agência salvos.' : 'Perfil atualizado.'); if (state.rota?.pagina === 'configuracoes') renderConfig(); }
+  catch (e){ avisar(msgErro(e)); b.disabled = false; }
+}
+
+/* ---------- Configurações: resumo com botões de editar ---------- */
+const renderConfigAntes = renderConfig;
+renderConfig = function(){
+  renderConfigAntes();
+  const cards = document.querySelectorAll('#cfg > .cfg');
+  const o = state.org || {}, m = state.membro || {};
+  if (cards[0]) cards[0].innerHTML = `<div class="cfg-cab"><div><h2>Agência</h2><p class="sub">Aparece no menu e no portal dos clientes.</p></div><button class="btn btn-claro" data-acao="editar-agencia">Editar</button></div>
+    <div class="cfg-resumo"><span class="ag-logo grande">${urlLogo() ? `<img src="${esc(urlLogo())}" alt="">` : esc(iniciais(o.nome))}</span>
+      <div><b>${esc(o.nome || '')}</b><small>${esc([o.cidade, o.cnpj].filter(Boolean).join(' · ') || 'Cidade e CNPJ não informados')}</small>
+      <div class="cfg-itens">${[['email', o.email], ['mensagem', o.whatsapp], ['link', o.instagram], ['financeiro', o.chave_pix ? 'PIX: ' + o.chave_pix : '']].map(([ic, v]) => v ? `<span>${icone(ic)}${esc(v)}</span>` : '').join('') || '<span class="sub">Contato e PIX ainda não preenchidos.</span>'}</div></div></div>`;
+  if (cards[1]) cards[1].innerHTML = `<div class="cfg-cab"><div><h2>Seu perfil</h2><p class="sub">Como a equipe e os clientes vão te ver.</p></div><button class="btn btn-claro" data-acao="meu-perfil">Editar</button></div>
+    <div class="cfg-resumo">${avatarPessoa(m, 'grande-av')}<div><b>${esc(nomeBonito(m.nome))}</b><small>${esc([papelTexto(m), m.telefone].filter(Boolean).join(' · '))}</small></div></div>`;
+  const faltam = (cfg.membros || []).map(x => x.foto_path).filter(x => x && !midiaCache[x]);
+  if (faltam.length && !MODO_DEMO && !renderConfig._buscando){
+    renderConfig._buscando = true;
+    api.urlsMidia(faltam).then(mm => { Object.assign(midiaCache, mm); renderConfig(); }).catch(() => {}).finally(() => { renderConfig._buscando = false; });
+  }
+  document.querySelectorAll('#cfg .membro .avatar').forEach((av, i) => {
+    const pessoa = cfg.membros?.[i]; if (pessoa && urlFoto(pessoa)) av.outerHTML = avatarPessoa(pessoa);
+  });
+};
+
+/* ---------- Entrada: carregar imagens antes de montar a tela e abrir o assistente ---------- */
+const entrarFase3 = entrarNoApp;
+entrarNoApp = async function(){
+  if (MODO_DEMO && state.org && state.org.configurado === undefined) Object.assign(state.org, { configurado:true, cidade:'Jaru - RO', whatsapp:'(69) 99999-0000', email:'contato@agencia.com' });
+  if (MODO_DEMO && state.membro && !state.membro.cargo) state.membro.cargo = 'Diretora';
+  await carregarImagensMarca();
+  await entrarFase3();
+  atualizarMarcaNaTela();
+  if (state.org && !state.org.configurado && state.membro?.papel === 'dono' && !sessionStorage.getItem('anya-pulou-config')) abrirAssistente(0);
+};
+
+document.addEventListener('click', e => {
+  const el = e.target.closest('[data-acao]'); if (!el) return;
+  switch (el.dataset.acao){
+    case 'meu-perfil': abrirModalDados('perfil'); break;
+    case 'editar-agencia': abrirModalDados('agencia'); break;
+    case 'abrir-assistente': abrirAssistente(0); break;
+    case 'assistente-voltar': lerForm(document.getElementById('form-assistente')); abrirAssistente(Math.max(0, passoAtual - 1)); break;
+    case 'pular-assistente': try { sessionStorage.setItem('anya-pulou-config', '1'); } catch {} fecharAssistente(); avisar('Tudo bem. Você termina depois em Configurações.'); if (state.rota?.pagina === 'inicio') navegar(); break;
+    case 'fechar-assistente': fecharAssistente(); if (el.dataset.depois === 'novo-cliente') setTimeout(() => document.querySelector('[data-acao="novo-cliente"]')?.click(), 450); break;
+    case 'remover-img': removerImagem(el.dataset.tipo, el.closest('form')); break;
+  }
+});
+document.addEventListener('change', e => { if (e.target.matches?.('[data-img]')) trocarImagem(e.target); });
+document.addEventListener('input', e => {
+  const n = e.target.name;
+  if (n === 'whatsapp' || n === 'telefone') e.target.value = mascaraTelefone(e.target.value);
+  if (n === 'cnpj') e.target.value = mascaraCnpj(e.target.value);
+});
+document.addEventListener('submit', e => {
+  if (e.target.id === 'form-assistente'){ e.preventDefault(); avancarAssistente(e.target); }
+  if (e.target.id === 'form-dados'){ e.preventDefault(); salvarModalDados(e.target); }
+});
+
+
+/* =====================================================================
+   APP INSTALÁVEL E NOTIFICAÇÕES NO CELULAR
+   ===================================================================== */
+const APP_TIPO = 'agencia';
+const VAPID_PUBLICA = 'BJnO9wHHeINVZAw_J_D3PJRygVnIyGItOoVvjO_KzgVmgDbhsS_7mFb5tRN3_ys3Z0mEkPZZThKBRQb80_Cnlso';
+const pwa = { prompt:null, reg:null };
+const appInstalado = () => matchMedia('(display-mode: standalone)').matches || navigator.standalone === true;
+const ehIOS = () => /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+const podeApp = () => 'serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost');
+if (podeApp()) navigator.serviceWorker.register('sw.js').then(r => { pwa.reg = r; }).catch(() => {});
+window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); pwa.prompt = e; atualizarBotoesApp(); });
+window.addEventListener('appinstalled', () => { pwa.prompt = null; atualizarBotoesApp(); avisar('App instalado! Procure o ícone na sua tela.'); });
+
+function podeInstalar(){ return !appInstalado() && (!!pwa.prompt || ehIOS()); }
+function atualizarBotoesApp(){
+  document.querySelectorAll('[data-app-instalar]').forEach(b => { b.hidden = !podeInstalar(); });
+  statusNotificacoes().then(st => {
+    document.querySelectorAll('[data-app-notif]').forEach(b => { b.hidden = st !== 'inativo'; });
+    document.querySelectorAll('[data-app-status]').forEach(el => { el.innerHTML = textoStatus(st); });
+  });
+}
+async function instalarApp(){
+  if (pwa.prompt){ pwa.prompt.prompt(); await pwa.prompt.userChoice.catch(() => {}); pwa.prompt = null; atualizarBotoesApp(); return; }
+  if (ehIOS()) instrucoesIPhone(false);
+  else avisar('Use o menu do navegador (⋮) e toque em "Instalar app" ou "Adicionar à tela inicial".');
+}
+function instrucoesIPhone(paraNotificacao){
+  const html = `<div class="modal-app" role="dialog" aria-modal="true" aria-labelledby="mt-app">
+    <h2 id="mt-app">${paraNotificacao ? 'No iPhone, instale o app primeiro' : 'Instalar no iPhone'}</h2>
+    <p class="sub">${paraNotificacao ? 'O iPhone só entrega notificações para sites instalados na tela de início.' : 'Leva 10 segundos.'}</p>
+    <ol class="passos-ios">
+      <li><span>1</span><div>Toque em <b>Compartilhar</b> <svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3M8 7l4-4 4 4"/><path d="M6 11H5a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-8a1 1 0 0 0-1-1h-1"/></svg> na barra do Safari.</div></li>
+      <li><span>2</span><div>Role e toque em <b>Adicionar à Tela de Início</b>.</div></li>
+      <li><span>3</span><div>Abra o app pelo novo ícone${paraNotificacao ? ' e toque em <b>Ativar notificações</b> de novo' : ''}.</div></li>
+    </ol>
+    <p class="sub" style="font-size:.8rem">Precisa ser pelo Safari, com iOS 16.4 ou mais novo.</p>
+    <div class="modal-rodape"><button type="button" class="btn btn-verde" data-acao="fechar-app">Entendi</button></div>
+  </div>`;
+  let el = document.getElementById('janela-app');
+  if (!el){ el = document.createElement('div'); el.id = 'janela-app'; document.body.appendChild(el); }
+  el.innerHTML = `<div class="fundo-app" data-acao="fechar-app-fundo">${html}</div>`;
+}
+function b64ParaBytes(s){
+  const p = '='.repeat((4 - s.length % 4) % 4), b = atob((s + p).replace(/-/g, '+').replace(/_/g, '/'));
+  return Uint8Array.from([...b].map(c => c.charCodeAt(0)));
+}
+async function statusNotificacoes(){
+  if (!('Notification' in window) || !podeApp() || !('PushManager' in window)) return ehIOS() && !appInstalado() ? 'ios' : 'sem-suporte';
+  if (Notification.permission === 'denied') return 'bloqueado';
+  try {
+    const reg = await navigator.serviceWorker.getRegistration();
+    const sub = reg && await reg.pushManager.getSubscription();
+    return sub && Notification.permission === 'granted' ? 'ativo' : 'inativo';
+  } catch { return 'inativo'; }
+}
+function textoStatus(st){
+  return ({ ativo:'<span class="st ok">● Ativadas neste aparelho</span>', inativo:'<span class="st">Desativadas neste aparelho</span>',
+    bloqueado:'<span class="st ruim">Bloqueadas. Libere nas configurações do navegador (cadeado ao lado do endereço).</span>',
+    ios:'<span class="st">No iPhone, instale o app para ativar.</span>', 'sem-suporte':'<span class="st">Este navegador não aceita notificações.</span>' })[st] || '';
+}
+async function ativarNotificacoes(){
+  const st = await statusNotificacoes();
+  if (st === 'ios'){ instrucoesIPhone(true); return; }
+  if (st === 'sem-suporte'){ avisar(MODO_DEMO ? 'As notificações funcionam no site publicado, não no modo demonstração.' : 'Este navegador não aceita notificações. Tente o Chrome.'); return; }
+  if (st === 'bloqueado'){ avisar('As notificações estão bloqueadas. Toque no cadeado ao lado do endereço e libere.'); return; }
+  try {
+    const perm = await Notification.requestPermission();
+    if (perm !== 'granted'){ avisar('Sem permissão, não dá para enviar avisos.'); return; }
+    const reg = await navigator.serviceWorker.ready;
+    let sub = await reg.pushManager.getSubscription();
+    if (!sub) sub = await reg.pushManager.subscribe({ userVisibleOnly:true, applicationServerKey:b64ParaBytes(VAPID_PUBLICA) });
+    const j = sub.toJSON();
+    if (!MODO_DEMO){
+      const { error } = await sb.rpc('salvar_inscricao_push', { p_endpoint:j.endpoint, p_p256dh:j.keys.p256dh, p_auth:j.keys.auth, p_app:APP_TIPO });
+      if (error) throw error;
+    }
+    reg.showNotification('Notificações ativadas', { body:'Você vai receber os avisos importantes aqui.', icon:APP_TIPO === 'portal' ? 'portal-192.png' : 'anya-192.png', badge:'selo-notificacao.png' });
+    avisar('Pronto! Notificações ativadas neste aparelho.');
+  } catch (e){ avisar(e?.message || 'Não foi possível ativar agora.'); }
+  atualizarBotoesApp();
+}
+async function desligarPushDoAparelho(){
+  try {
+    const reg = await navigator.serviceWorker?.getRegistration(); const sub = reg && await reg.pushManager.getSubscription();
+    if (sub && !MODO_DEMO){ await sb.rpc('remover_inscricao_push', { p_endpoint:sub.endpoint }); }
+  } catch {}
+}
+function contadorNoIcone(n){ try { if (n) navigator.setAppBadge?.(n); else navigator.clearAppBadge?.(); } catch {} }
+document.addEventListener('click', e => {
+  const el = e.target.closest('[data-acao]'); if (!el) return;
+  const a = el.dataset.acao;
+  if (a === 'instalar-app') instalarApp();
+  if (a === 'ativar-notificacoes') ativarNotificacoes();
+  if (a === 'fechar-app' || (a === 'fechar-app-fundo' && e.target === el)) document.getElementById('janela-app')?.remove();
+});
+
+/* ---- encaixe no sistema da agência ---- */
+function botoesAppHTML(){
+  return `<button class="btn-app" data-app-instalar data-acao="instalar-app" hidden>${icone('baixar') || ''}Instalar app</button>
+    <button class="btn-app" data-app-notif data-acao="ativar-notificacoes" hidden>${icone('sino')}Ativar notificações</button>`;
+}
+const entrarAntesApp = entrarNoApp;
+entrarNoApp = async function(){
+  await entrarAntesApp();
+  const rod = document.querySelector('.lateral-rodape');
+  if (rod && !document.querySelector('.lateral-app')){ rod.insertAdjacentHTML('beforebegin', `<div class="lateral-app">${botoesAppHTML()}</div>`); }
+  atualizarBotoesApp();
+};
+const sairAntesApp = sair;
+sair = async function(){ await desligarPushDoAparelho(); contadorNoIcone(0); await sairAntesApp(); };
+const sinoAntesApp = atualizarSino;
+atualizarSino = function(p){ sinoAntesApp(p); contadorNoIcone(notif.itens.filter(x => !x.lida).length); };
+const notifAntesApp = abrirNotificacoes;
+abrirNotificacoes = function(){
+  notifAntesApp();
+  const pop = document.querySelector('#pop-notif .pop-notif');
+  if (pop) statusNotificacoes().then(st => {
+    if (st === 'inativo' || st === 'ios') pop.querySelector('.pn-cab')?.insertAdjacentHTML('afterend', `<div class="notif-ativar">${icone('sino')}<span>Receba estes avisos no celular, mesmo com o app fechado.</span><button class="btn btn-verde" data-acao="ativar-notificacoes">Ativar</button></div>`);
+  });
+};
+const configAntesApp = renderConfig;
+renderConfig = function(){
+  configAntesApp();
+  const alvo = document.getElementById('cfg'); if (!alvo) return;
+  alvo.insertAdjacentHTML('beforeend', `<section class="card cfg entra" style="--i:4">
+    <div class="cfg-cab"><div><h2>App e notificações</h2><p class="sub">Instale a ANYA como aplicativo e receba avisos no celular e no computador, mesmo com o app fechado.</p></div></div>
+    <p data-app-status style="margin-top:14px"></p>
+    <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:12px">
+      <button class="btn btn-verde" data-app-instalar data-acao="instalar-app" hidden>Instalar app</button>
+      <button class="btn btn-claro" data-app-notif data-acao="ativar-notificacoes" hidden>${icone('sino')}Ativar notificações</button>
+    </div>
+    <p class="sub" style="font-size:.8rem;margin-top:12px">Ative em cada aparelho que você usa: celular e computador. No iPhone, instale o app primeiro (Safari → Compartilhar → Adicionar à Tela de Início).</p>
+  </section>`);
+  atualizarBotoesApp();
+};
+
 iniciar();
 </script>
+
 </body>
 </html>

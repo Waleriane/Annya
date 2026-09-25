@@ -1,0 +1,33 @@
+{
+  "id": "./anya-portal.html",
+  "name": "Portal do Cliente",
+  "short_name": "Portal",
+  "description": "Aprove conteúdos, veja arquivos e fale com a agência.",
+  "lang": "pt-BR",
+  "start_url": "./anya-portal.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#F8F8F5",
+  "theme_color": "#0F766E",
+  "icons": [
+    {
+      "src": "portal-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "portal-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "portal-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
