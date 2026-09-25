@@ -369,6 +369,17 @@ svg.i{width:18px;height:18px;flex:none;fill:none;stroke:currentColor;stroke-widt
 .aviso{padding:14px 16px;border-radius:14px;background:var(--verde-claro);color:var(--verde-escuro);font-size:.88rem;margin-bottom:18px}
 .erro{color:var(--vermelho);font-size:.88rem}
 .troca{text-align:center;margin-top:6px}
+.quem{display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:4px;margin-bottom:28px;border-radius:14px;background:rgba(23,26,25,.06)}
+.quem>*{display:flex;align-items:center;justify-content:center;height:40px;border:none;border-radius:11px;background:none;font-weight:500;font-size:.9rem;color:var(--texto-2);text-decoration:none;transition:background .25s,color .25s}
+.quem .ativo{background:#fff;color:var(--verde);font-weight:600;box-shadow:0 1px 3px rgba(23,26,25,.12)}
+.quem a:hover{color:var(--texto)}
+.rot-linha{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.esqueci{border:none;background:none;padding:0;color:var(--verde);font-size:.82rem;font-weight:500;cursor:pointer}
+.esqueci:hover{text-decoration:underline}
+.com-olho{position:relative}
+.com-olho input{padding-right:48px}
+.olho{position:absolute;right:5px;top:50%;transform:translateY(-50%);width:38px;height:38px;display:grid;place-items:center;border:none;border-radius:10px;background:none;color:var(--cinza);cursor:pointer;transition:color .2s,background .2s}
+.olho:hover{color:var(--verde);background:var(--fundo)}
 .troca button{border:none;background:none;color:var(--texto-2);font-size:.88rem}
 .troca button:hover{color:var(--verde)}
 .carregando{min-height:100vh;display:grid;place-items:center;font-weight:700;letter-spacing:.3em;color:var(--verde);animation:esmaece .6s ease both}
@@ -1014,6 +1025,7 @@ const CONFIG = {
 };
 
 const MODO_DEMO = !CONFIG.SUPABASE_URL || !CONFIG.SUPABASE_ANON_KEY;
+const VEIO_RECUPERAR = /type=recovery/.test(location.hash + location.search);
 const sb = MODO_DEMO ? null : window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY);
 const reduzMovimento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -1326,8 +1338,11 @@ const state = {
 async function iniciar(){
   if (MODO_DEMO){ state.tela = 'login'; renderAuth(); return; }
   const { data:{ session } } = await sb.auth.getSession();
-  await aoSessao(session);
-  sb.auth.onAuthStateChange((_e, s) => {
+  if (VEIO_RECUPERAR && session){ state.user = session.user; state.tela = 'nova-senha'; renderAuth(); }
+  else await aoSessao(session);
+  sb.auth.onAuthStateChange((ev, s) => {
+    if (ev === 'PASSWORD_RECOVERY'){ state.user = s?.user || null; state.tela = 'nova-senha'; renderAuth(); return; }
+    if (state.tela === 'nova-senha') return;
     if ((s?.user?.id || null) !== (state.user?.id || null)) aoSessao(s);
   });
 }
@@ -1374,20 +1389,41 @@ function renderAuth(){
       <p class="lm-frase">A ferramenta organiza o trabalho. Você só executa.</p>
     </div>`;
   let caixa = '';
+  const escolha = `<div class="quem" role="tablist" aria-label="Tipo de acesso"><button type="button" class="ativo" role="tab" aria-selected="true">Sou da agência</button><a href="${esc(CONFIG.PORTAL_URL || 'anya-portal.html')}" role="tab" aria-selected="false">Sou cliente</a></div>`;
+  const campoSenha = (id, nome, rotulo, auto, extra = '') => `<div class="campo"><div class="rot-linha"><label for="${id}">${rotulo}</label>${extra}</div>
+    <div class="com-olho"><input id="${id}" name="${nome}" type="password" required minlength="6" autocomplete="${auto}"><button type="button" class="olho" data-acao="ver-senha" aria-label="Mostrar senha" title="Mostrar senha">${OLHO_ABERTO}</button></div></div>`;
   if (state.tela === 'login' && MODO_DEMO){
-    caixa = `<h1>Bem-vinda</h1><p class="sub">Entre para ver o que precisa da sua atenção hoje.</p>
+    caixa = `${escolha}<h1>Bem-vinda</h1><p class="sub">Entre para ver o que precisa da sua atenção hoje.</p>
       <div class="aviso">Modo demonstração: os dados são de exemplo e voltam ao original quando você recarrega a página.</div>
       <button class="btn btn-verde" data-acao="entrar-demo">Entrar na demonstração ${icone('seta')}</button>`;
   } else if (state.tela === 'login'){
     const criar = state.loginModo === 'criar';
-    caixa = `<h1>${criar ? 'Criar conta' : 'Entrar'}</h1><p class="sub">${criar ? 'Leva menos de um minuto.' : 'Bom te ver de novo.'}</p>
+    if (state.loginModo === 'recuperar'){
+      caixa = `${escolha}<h1>Recuperar senha</h1><p class="sub">Digite seu e-mail. Vamos mandar um link para você criar uma senha nova.</p>
+        <form id="form-recuperar">
+          <div class="campo"><label for="r-email">E-mail</label><input id="r-email" name="email" type="email" required autocomplete="email" value="${esc(state.emailDigitado || '')}"></div>
+          ${state.erro ? `<p class="erro">${esc(state.erro)}</p>` : ''}
+          ${state.okRecuperar ? `<div class="aviso">Pronto! Se este e-mail tiver cadastro, o link chega em alguns minutos. Confira também a caixa de spam.</div>` : ''}
+          <button class="btn btn-verde" type="submit">Enviar link</button>
+          <div class="troca"><button type="button" data-acao="voltar-login">Voltar para entrar</button></div>
+        </form>`;
+    } else
+    caixa = `${escolha}<h1>${criar ? 'Criar conta' : 'Entrar'}</h1><p class="sub">${criar ? 'Leva menos de um minuto.' : 'Bom te ver de novo.'}</p>
       <form id="form-login">
         ${criar ? `<div class="campo"><label for="l-nome">Seu nome</label><input id="l-nome" name="nome" required autocomplete="name"></div>` : ''}
         <div class="campo"><label for="l-email">E-mail</label><input id="l-email" name="email" type="email" required autocomplete="email"></div>
-        <div class="campo"><label for="l-senha">Senha</label><input id="l-senha" name="senha" type="password" required minlength="6" autocomplete="${criar ? 'new-password' : 'current-password'}"></div>
+        ${campoSenha('l-senha', 'senha', 'Senha', criar ? 'new-password' : 'current-password', criar ? '' : '<button type="button" class="esqueci" data-acao="esqueci-senha">Esqueci minha senha</button>')}
         ${state.erro ? `<p class="erro">${esc(state.erro)}</p>` : ''}
         <button class="btn btn-verde" type="submit">${criar ? 'Criar conta' : 'Entrar'}</button>
         <div class="troca"><button type="button" data-acao="trocar-login">${criar ? 'Já tenho conta' : 'Ainda não tenho conta'}</button></div>
+      </form>`;
+  } else if (state.tela === 'nova-senha'){
+    caixa = `<h1>Criar nova senha</h1><p class="sub">Escolha uma senha nova para ${esc(state.user?.email || 'sua conta')}.</p>
+      <form id="form-nova-senha">
+        ${campoSenha('n-senha', 'senha', 'Nova senha', 'new-password')}
+        ${campoSenha('n-senha2', 'senha2', 'Repita a nova senha', 'new-password')}
+        ${state.erro ? `<p class="erro">${esc(state.erro)}</p>` : ''}
+        <button class="btn btn-verde" type="submit">Salvar nova senha</button>
       </form>`;
   } else if (state.tela === 'criar-agencia'){
     caixa = `<h1>Como se chama sua agência?</h1><p class="sub">Você entra como dona. Depois dá para convidar a equipe.</p>
@@ -1420,6 +1456,41 @@ async function enviarLogin(form){
     }
   } catch (e){ state.erro = msgErro(e); renderAuth(); }
   finally { botao.disabled = false; }
+}
+
+const OLHO_ABERTO = '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12S6 5.5 12 5.5 21.5 12 21.5 12 18 18.5 12 18.5 2.5 12 2.5 12z"/><circle cx="12" cy="12" r="3"/></svg>';
+const OLHO_FECHADO = '<svg class="i" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 3l18 18"/><path d="M10.6 5.6A9.7 9.7 0 0 1 12 5.5c6 0 9.5 6.5 9.5 6.5a16.5 16.5 0 0 1-3.1 3.8M6.4 6.9C3.9 8.6 2.5 12 2.5 12S6 18.5 12 18.5c1.6 0 3.1-.4 4.3-1.1"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg>';
+function alternarOlho(botao){
+  const inp = botao.parentElement.querySelector('input'); if (!inp) return;
+  const mostrar = inp.type === 'password';
+  inp.type = mostrar ? 'text' : 'password';
+  botao.innerHTML = mostrar ? OLHO_FECHADO : OLHO_ABERTO;
+  botao.setAttribute('aria-label', mostrar ? 'Esconder senha' : 'Mostrar senha');
+  botao.title = mostrar ? 'Esconder senha' : 'Mostrar senha';
+  inp.focus();
+}
+async function enviarRecuperar(form){
+  const email = form.email.value.trim(); if (!email) return;
+  const b = form.querySelector('[type=submit]'); b.disabled = true; b.textContent = 'Enviando…';
+  state.erro = ''; state.emailDigitado = email;
+  const { error } = await sb.auth.resetPasswordForEmail(email, { redirectTo:location.origin + location.pathname });
+  if (error) state.erro = /rate|limit|seconds/i.test(error.message) ? 'Muitas tentativas seguidas. Espere alguns minutos e tente de novo.' : msgErro(error);
+  else state.okRecuperar = true;
+  renderAuth();
+}
+async function salvarNovaSenha(form){
+  const s1 = form.senha.value, s2 = form.senha2.value;
+  state.erro = '';
+  if (s1.length < 6){ state.erro = 'A senha precisa ter pelo menos 6 caracteres.'; renderAuth(); return; }
+  if (s1 !== s2){ state.erro = 'As duas senhas não estão iguais.'; renderAuth(); return; }
+  const b = form.querySelector('[type=submit]'); b.disabled = true;
+  const { error } = await sb.auth.updateUser({ password:s1 });
+  if (error){ state.erro = /different|same/i.test(error.message) ? 'A senha nova precisa ser diferente da antiga.' : msgErro(error); renderAuth(); return; }
+  avisar('Senha alterada. Tudo certo!');
+  history.replaceState(null, '', location.pathname);
+  const { data:{ session } } = await sb.auth.getSession();
+  state.tela = 'login';
+  await aoSessao(session);
 }
 
 async function criarAgencia(form){
@@ -2188,6 +2259,9 @@ document.addEventListener('click', e => {
     switch (a){
       case 'entrar-demo': state.membro = { nome:'Waleriane', papel:'dono' }; state.org = { nome:'Agência Demonstração' }; entrarNoApp(); break;
       case 'trocar-login': state.loginModo = state.loginModo === 'entrar' ? 'criar' : 'entrar'; state.erro = ''; renderAuth(); break;
+      case 'ver-senha': alternarOlho(el); break;
+      case 'esqueci-senha': state.emailDigitado = document.getElementById('l-email')?.value || ''; state.loginModo = 'recuperar'; state.erro = ''; state.okRecuperar = false; renderAuth(); break;
+      case 'voltar-login': state.loginModo = 'entrar'; state.erro = ''; state.okRecuperar = false; renderAuth(); break;
       case 'sair': sair(); break;
       case 'criar': abrirCriar(); break;
       case 'anya': avisar(state.cli ? `A IA chega na Fase 6, já sabendo que o cliente atual é ${state.cli.cliente.nome}.` : 'A IA chega na Fase 6.'); break;
@@ -2246,6 +2320,8 @@ document.addEventListener('submit', e => {
   e.preventDefault();
   const id = e.target.id;
   if (id === 'form-login') enviarLogin(e.target);
+  if (id === 'form-recuperar') enviarRecuperar(e.target);
+  if (id === 'form-nova-senha') salvarNovaSenha(e.target);
   if (id === 'form-agencia') criarAgencia(e.target);
   if (id === 'form-cliente') salvarCliente(e.target);
   if (id === 'form-tarefa') salvarTarefa(e.target);
